@@ -8,8 +8,7 @@ const restaurantData = [
     city: "Miami",
     state: "Florida",
     rating: 4,
-    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=60",
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
+    img: "https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&w=800&q=60",
     desc: "Enjoy exquisite seafood and tropical vibes at the famous Bluewater Restaurant, right by Miami beach.",
   },
   {
@@ -18,8 +17,7 @@ const restaurantData = [
     city: "New York",
     state: "New York",
     rating: 5,
-    img: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed56?auto=format&fit=crop&w=800&q=60",
-    video: "https://www.youtube.com/embed/ysz5S6PUM-U",
+    img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&w=800&q=60",
     desc: "Luxury meets comfort at the Skyline Lounge — dine with breathtaking views of New York’s skyline.",
   },
   {
@@ -29,7 +27,6 @@ const restaurantData = [
     state: "California",
     rating: 4,
     img: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=60",
-    video: "https://www.w3schools.com/html/movie.mp4",
     desc: "A perfect blend of dining and nightlife, Wave Night Club offers a modern twist on coastal cuisine.",
   },
   {
@@ -39,7 +36,6 @@ const restaurantData = [
     state: "Florida",
     rating: 3,
     img: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&w=800&q=60",
-    video: "https://www.youtube.com/embed/tgbNymZ7vqY",
     desc: "Relax by the shore with mouthwatering grilled specials and live music every weekend.",
   },
   {
@@ -49,7 +45,6 @@ const restaurantData = [
     state: "California",
     rating: 5,
     img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&w=800&q=60",
-    video: "https://www.youtube.com/embed/oUFJJNQGwhk",
     desc: "Classic diner vibes with a gourmet twist — famous for its handmade burgers and cocktails.",
   },
   {
@@ -59,7 +54,6 @@ const restaurantData = [
     state: "Florida",
     rating: 4,
     img: "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&w=800&q=60",
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
     desc: "Chill atmosphere with freshly brewed coffee, ocean views, and live acoustic sessions.",
   },
   {
@@ -69,7 +63,6 @@ const restaurantData = [
     state: "New York",
     rating: 3,
     img: "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&w=800&q=60",
-    video: "https://www.youtube.com/embed/tgbNymZ7vqY",
     desc: "Trendy bistro known for innovative cocktails and a cozy ambiance in downtown NYC.",
   },
   {
@@ -79,7 +72,6 @@ const restaurantData = [
     state: "California",
     rating: 4,
     img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&w=800&q=60",
-    video: "https://www.w3schools.com/html/movie.mp4",
     desc: "A seafood lover’s paradise offering a beautiful view of the harbor and fresh daily catches.",
   },
   {
@@ -89,7 +81,6 @@ const restaurantData = [
     state: "Florida",
     rating: 5,
     img: "https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&w=800&q=60",
-    video: "https://www.youtube.com/embed/oUFJJNQGwhk",
     desc: "A tropical-themed eatery offering fresh fruit platters and exotic beverages under palm trees.",
   },
   {
@@ -99,7 +90,6 @@ const restaurantData = [
     state: "Illinois",
     rating: 4,
     img: "https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&w=800&q=60",
-    video: "https://www.youtube.com/embed/ysz5S6PUM-U",
     desc: "Elegant restaurant serving a fusion of Asian and Western cuisines with style.",
   },
   {
@@ -109,7 +99,6 @@ const restaurantData = [
     state: "Texas",
     rating: 5,
     img: "https://images.unsplash.com/photo-1520201163981-8cc95007dd2a?auto=format&w=800&q=60",
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
     desc: "Dine under the stars with the city skyline at Austin’s most popular rooftop venue.",
   },
   {
@@ -118,8 +107,7 @@ const restaurantData = [
     city: "Seattle",
     state: "Washington",
     rating: 4,
-    img: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed56?auto=format&w=800&q=60",
-    video: "https://www.youtube.com/embed/tgbNymZ7vqY",
+    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=60",
     desc: "A peaceful café famous for its pastries, warm drinks, and calm moonlit view.",
   },
 ];
@@ -144,8 +132,6 @@ const Restaurants = () => {
     alert("Please sign up to book a seat.");
   };
 
-  const isYouTubeLink = (url) => url.includes("youtube.com") || url.includes("youtu.be");
-
   return (
     <div className="restaurants-page">
       <header>
@@ -165,7 +151,10 @@ const Restaurants = () => {
           value={stateFilter}
           onChange={(e) => setStateFilter(e.target.value)}
         />
-        <select value={minRating} onChange={(e) => setMinRating(Number(e.target.value))}>
+        <select
+          value={minRating}
+          onChange={(e) => setMinRating(Number(e.target.value))}
+        >
           <option value={0}>All Ratings</option>
           <option value={1}>1 Star & above</option>
           <option value={2}>2 Stars & above</option>
@@ -177,7 +166,11 @@ const Restaurants = () => {
 
       <section className="restaurant-grid">
         {filteredRestaurants.map((r) => (
-          <div className="restaurant-card" key={r.id} onClick={() => setSelectedRestaurant(r)}>
+          <div
+            className="restaurant-card"
+            key={r.id}
+            onClick={() => setSelectedRestaurant(r)}
+          >
             <img src={r.img} alt={r.name} />
             <div className="restaurant-info">
               <h4>{r.name}</h4>
@@ -185,48 +178,32 @@ const Restaurants = () => {
                 {r.city}, {r.state}
               </p>
               <p className="stars">{"⭐".repeat(r.rating)}</p>
-              <button
-                className="book-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleBook();
-                }}
-              >
-                Book Seat
-              </button>
             </div>
           </div>
         ))}
       </section>
 
-      {/* Modal Popup with Image + Video */}
+      {/* Popup Modal */}
       {selectedRestaurant && (
         <div className="modal" onClick={() => setSelectedRestaurant(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <span className="close" onClick={() => setSelectedRestaurant(null)}>
               &times;
             </span>
-
-            <img src={selectedRestaurant.img} alt={selectedRestaurant.name} className="modal-img" />
-
-            {isYouTubeLink(selectedRestaurant.video) ? (
-              <iframe
-                className="modal-video"
-                src={selectedRestaurant.video}
-                title={selectedRestaurant.name}
-                allowFullScreen
-              ></iframe>
-            ) : (
-              <video className="modal-video" controls>
-                <source src={selectedRestaurant.video} type="video/mp4" />
-                Your browser does not support HTML video.
-              </video>
-            )}
-
+            <img
+              src={selectedRestaurant.img}
+              alt={selectedRestaurant.name}
+              className="modal-img"
+            />
             <h2>{selectedRestaurant.name}</h2>
+            <p className="restaurant-info">{selectedRestaurant.desc}</p>
+            <p className="restaurant-info">
+              {selectedRestaurant.city},{selectedRestaurant.state}
+            </p>
             <p className="stars">{"⭐".repeat(selectedRestaurant.rating)}</p>
-            <p>📍 {selectedRestaurant.city}, {selectedRestaurant.state}</p>
-            <p className="desc">{selectedRestaurant.desc}</p>
+            <button className="book-btn" onClick={handleBook}>
+              Book Seat
+            </button>
           </div>
         </div>
       )}
