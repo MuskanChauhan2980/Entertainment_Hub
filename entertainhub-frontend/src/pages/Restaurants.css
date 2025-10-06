@@ -115,6 +115,79 @@ header h1 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+/* Modal Styles */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(17, 23, 34, 0.92);
+  z-index: 999;
+}
+
+.modal-content {
+  background: #1e293b;
+  color: #fff;
+  border-radius: 18px;
+  padding: 30px;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 6px 38px rgba(0, 0, 0, 0.39);
+  animation: popup 0.3s ease;
+}
+
+@keyframes popup {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.modal h2 {
+  color: #facc15;
+  margin-bottom: 10px;
+}
+
+.modal .desc {
+  color: #ddd;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.close {
+  color: #facc15;
+  position: absolute;
+  top: 15px;
+  right: 26px;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal-video {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border: none;
+  object-fit: cover;
+}
+
 
 @media (max-width: 600px) {
   .restaurant-grid {
