@@ -1,6 +1,8 @@
 // src/App.jsx
 import React from "react";
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Restaurants from "./pages/Restaurants";
 
 const events = [
   {
