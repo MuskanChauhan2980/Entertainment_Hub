@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+ import React, { useState } from "react";
 import "./Articles.css";
 
 const articleData = [
-  // 12 realistic articles
   {
     id: 1,
     title: "Meet DJ Rohan – The Party Starter",
@@ -151,80 +150,104 @@ const articleData = [
 
 const Articles = () => {
   const [selectedArticle, setSelectedArticle] = useState(null);
-  const [showDescription, setShowDescription] = useState(false);
+  const [showFullDesc, setShowFullDesc] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [trendingFilter, setTrendingFilter] = useState("All");
+  const [authorFilter, setAuthorFilter] = useState("Author");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [bookmarkedArticles, setBookmarkedArticles] = useState([]);
 
-  const handleReadMore = () => setShowDescription(true);
+  const toggleBookmark = (id) => {
+    setBookmarkedArticles((prev) =>
+      prev.includes(id)
+        ? prev.filter((item) => item !== id)
+        : [...prev, id]
+    );
+  };
 
-  // Split articles into rows of 4
-  const rows = [];
-  for (let i = 0; i < articleData.length; i += 4) {
-    rows.push(articleData.slice(i, i + 4));
-  }
+  const filteredArticles = articleData.filter((article) => {
+    const matchesCategory = categoryFilter === "All" || article.category === categoryFilter;
+    const matchesTrending = trendingFilter === "All" || (trendingFilter === "Trending" && article.trending);
+    const matchesAuthor = authorFilter === "Author" || article.author === authorFilter;
+    const matchesSearch =
+      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article.author.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesTrending && matchesAuthor && matchesSearch;
+  });
+
+  const authors = ["All", ...new Set(articleData.map((a) => a.author))];
 
   return (
     <div className="articles-page">
       <header>
         <h1>Articles Hub</h1>
-        <p>Explore stories, insights, and trends from industry professionals and venues.</p>
+        <p>Deep insights, stories, and analysis from industry professionals, venues, and trends.</p>
       </header>
 
-      {rows.map((row, idx) => (
-        <section key={idx} className="featured-articles">
-          {row.map((article) => (
-            <div
-              key={article.id}
-              className={`article-card ${
-                article.category === "People Feature"
-                  ? "people-feature"
-                  : article.category === "Company/Venue"
-                  ? "company-venue"
-                  : "blog"
-              }`}
-            >
-              <img
-                src={article.image}
-                alt={article.title}
-                onClick={() => {
-                  setSelectedArticle(article);
-                  setShowDescription(false);
-                }}
-              />
-              <div className="article-info">
-                <div className="article-category">{article.category}</div>
-                {article.trending && <div className="trending">🔥 Trending</div>}
-                <h3>{article.title}</h3>
-                <div className="author">
-                  <img src={article.avatar} alt={article.author} className="avatar" />
-                  <span>{article.author}</span>
-                </div>
-              </div>
-            </div>
+      <section className="filters">
+        <input
+          type="text"
+          placeholder="Search by title, description, or author..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
+          <option value="All">All Categories</option>
+          <option value="People Feature">People Feature</option>
+          <option value="Company/Venue">Company/Venue</option>
+          <option value="Blog">Blog</option>
+        </select>
+        <select value={trendingFilter} onChange={(e) => setTrendingFilter(e.target.value)}>
+          <option value="All">All</option>
+          <option value="Trending">Trending Only</option>
+        </select>
+        <select value={authorFilter} onChange={(e) => setAuthorFilter(e.target.value)}>
+          {authors.map((author, index) => (
+            <option key={index} value={author}>{author}</option>
           ))}
-        </section>
-      ))}
+        </select>
+      </section>
+
+      <section className="featured-articles">
+        {filteredArticles.map((article) => (
+          <div
+            key={article.id}
+            className={`article-card ${article.category === "People Feature" ? "people-feature" : article.category === "Company/Venue" ? "company-venue" : "blog"}`}
+          >
+            <img src={article.image} alt={article.title} onClick={() => { setSelectedArticle(article); setShowFullDesc(false); }} />
+            <div className="article-info">
+              <div className="article-category">{article.category}</div>
+              {article.trending && <div className="trending">🔥 Trending</div>}
+              <h3>{article.title}</h3>
+              <div className="author">
+                <img src={article.avatar} alt={article.author} className="avatar" />
+                <span>{article.author}</span>
+              </div>
+              <button
+                className={`bookmark-btn ${bookmarkedArticles.includes(article.id) ? "active" : ""}`}
+                onClick={(e) => { e.stopPropagation(); toggleBookmark(article.id); }}
+              >
+                {bookmarkedArticles.includes(article.id) ? "★ Bookmarked" : "☆ Bookmark"}
+              </button>
+            </div>
+          </div>
+        ))}
+      </section>
 
       {selectedArticle && (
         <div className="modal" onClick={() => setSelectedArticle(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span className="close" onClick={() => setSelectedArticle(null)}>
-              &times;
-            </span>
-            <img
-              src={selectedArticle.image}
-              alt={selectedArticle.title}
-              className="modal-img"
-            />
+            <span className="close" onClick={() => setSelectedArticle(null)}>&times;</span>
+            <img src={selectedArticle.image} alt={selectedArticle.title} className="modal-img" />
             <h2>{selectedArticle.title}</h2>
             <p className="author">
-              <img src={selectedArticle.avatar} alt={selectedArticle.author} className="avatar" />
+              <img src={selectedArticle.avatar} alt={selectedArticle.author} className="avatar" /> 
               {selectedArticle.author} • {selectedArticle.date} • {selectedArticle.readTime}
             </p>
-            {!showDescription ? (
-              <button className="read-more-btn" onClick={handleReadMore}>
-                Read More
-              </button>
-            ) : (
-              <p className="description">{selectedArticle.description}</p>
+            <p className={`description ${showFullDesc ? "full" : "short"}`}>{selectedArticle.description}</p>
+            {!showFullDesc && (
+              <button className="read-more-btn" onClick={() => setShowFullDesc(true)}>Read More</button>
             )}
           </div>
         </div>
