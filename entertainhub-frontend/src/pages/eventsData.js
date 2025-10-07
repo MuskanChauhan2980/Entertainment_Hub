@@ -1,7 +1,3 @@
-import React, { useState } from "react";
-import "./Events.css";
-import { useNavigate } from "react-router-dom";
-
 const eventsData = [
   {
     id: 1,
@@ -181,7 +177,7 @@ const eventsData = [
     title: "Summer Reunion Fridays – Surf Club",
     category: "beachclub",
     video:
-      "https://linvite-production.nyc3.cdn.digitaloceanspaces.com/landing-page-site-assets/Member%20Event%20Videos/third-video.mp4",
+   "https://linvite-production.nyc3.cdn.digitaloceanspaces.com/landing-page-site-assets/Member%20Event%20Videos/third-video.mp4",
     location: "Surf Club, Mumbai, Maharashtra",
     city: "Mumbai",
     state: "Maharashtra",
@@ -189,137 +185,4 @@ const eventsData = [
   },
 ];
 
-const Events = () => {
-  const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedCity, setSelectedCity] = useState("all");
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const categories = [
-    { key: "all", label: "All", icon: "fa-bars-staggered" },
-    { key: "nightclub", label: "Nightclub", icon: "fa-music" },
-    { key: "beachclub", label: "Beach & Pool", icon: "fa-umbrella-beach" },
-    { key: "restaurant", label: "Restaurant", icon: "fa-utensils" },
-    { key: "brunch", label: "Brunch", icon: "fa-mug-hot" },
-    { key: "ladiesnight", label: "Ladies Night", icon: "fa-face-smile" },
-    { key: "afterparty", label: "After Party", icon: "fa-guitar" },
-    { key: "persian-arabic", label: "Persian & Arabic", icon: "fa-heart" },
-  ];
-
-  const cities = ["all", "Mumbai", "Delhi", "Goa", "Bangalore"];
-
-  const filteredEvents = eventsData.filter((event) => {
-    const matchCategory =
-      selectedCategory === "all" || event.category === selectedCategory;
-    const matchCity = selectedCity === "all" || event.city === selectedCity;
-    const matchSearch = event.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    return matchCategory && matchCity && matchSearch;
-  });
-
-  const handleReadMore = () => {
-    navigate("/signup"); // redirect to signup page
-  };
-
-  const handleBookNow = () => {
-    navigate("/signup"); // redirect to signup page
-  };
-
-  return (
-    <div className="events-page">
-      <h2>🎉 Upcoming Events</h2>
-
-      {/* Filters */}
-      <div className="events-top-nav">
-        <div className="city-filter">
-          <label htmlFor="citySelect">📍 City:</label>
-          <select
-            id="citySelect"
-            value={selectedCity}
-            onChange={(e) => setSelectedCity(e.target.value)}
-          >
-            {cities.map((city) => (
-              <option key={city} value={city}>
-                {city === "all" ? "All Cities" : city}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="🔎 Search events..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-      </div>
-
-      {/* Category Bar */}
-      <ul className="event-category-bar">
-        {categories.map((cat) => (
-          <li
-            key={cat.key}
-            className={selectedCategory === cat.key ? "active" : ""}
-            onClick={() => setSelectedCategory(cat.key)}
-          >
-            <i className={`fa-solid ${cat.icon}`}></i> {cat.label}
-          </li>
-        ))}
-      </ul>
-
-      {/* Event Cards */}
-      <div className="events-grid">
-        {filteredEvents.map((event) => (
-          <div key={event.id} className="event-card">
-            {event.image ? (
-              <img src={event.image} alt={event.title} className="event-img" />
-            ) : event.video ? (
-              <video
-                src={event.video}
-                className="event-img"
-                autoPlay
-                muted
-                loop
-              />
-            ) : (
-              <div className="no-media">No media available</div>
-            )}
-
-            <div className="event-info">
-              <h3>{event.title}</h3>
-              <p>
-                📍 {event.location}
-                <br /> 🕒 {event.time || event.date}
-              </p>
-              <p className="short-desc">
-                {event.description?.length > 80
-                  ? event.description.slice(0, 80) + "..."
-                  : event.description}
-              </p>
-              <div className="event-btns">
-                <button
-                  className="details-btn"
-                  onClick={() => navigate(`/events/${event.id}`)}
-                >
-                  Read More
-                </button>
-
-                <button className="book-btn" onClick={handleBookNow}>
-                  Book Now
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-        {filteredEvents.length === 0 && (
-          <p className="no-results">No events found.</p>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default Events;
+export default eventsData;

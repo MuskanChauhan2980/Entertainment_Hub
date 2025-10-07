@@ -6,7 +6,8 @@ import Home from "./pages/Home";
 import Articles from "./pages/Articles"; 
 import Event from "./pages/Events"
 import Signup from "./pages/signup";
-import Login from "./pages/login"
+import Login from "./pages/login";
+import EventDetails from "./pages/EventDetails";
 import "./App.css";
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
         <Route path="/blog" element={<Blog/>}/> 
         <Route path="/article" element={<Articles/>}/> 
         <Route path ="/event" element={<Event/>}/>
+        <Route path="/events/:id" element={<EventDetails />} />
+
       </Routes>
     </Router>
   );
