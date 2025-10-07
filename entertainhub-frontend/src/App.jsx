@@ -4,6 +4,7 @@ import Restaurants from "./pages/Restaurants";
 import Blog from "./pages/Blog";
 import Home from "./pages/Home"; 
 import Articles from "./pages/Articles"; 
+import Event from "./pages/Events"
 import "./App.css";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path="/restaurants" element={<Restaurants />} />
         <Route path="/blog" element={<Blog/>}/> 
         <Route path="/article" element={<Articles/>}/> 
+        <Route path ="/event" element={<Event/>}/>
       </Routes>
     </Router>
   );
