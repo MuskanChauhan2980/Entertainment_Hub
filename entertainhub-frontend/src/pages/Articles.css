@@ -38,12 +38,25 @@ header p {
   overflow: hidden;
   cursor: pointer;
   position: relative;
-  transition: transform 0.25s, box-shadow 0.25s;
+  transition: transform 0.25s, box-shadow 0.25s, border 0.25s;
 }
 
 .article-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(250, 204, 21, 0.3);
+}
+
+/* Different styles for categories */
+.article-card.people-feature {
+  border: 2px solid #f472b6; /* Pink border for People Feature */
+}
+
+.article-card.company-venue {
+  border: 2px solid #3b82f6; /* Blue border for Company/Venue */
+}
+
+.article-card.blog {
+  border: 2px solid #facc15; /* Yellow border for Blog */
 }
 
 .article-card img {
@@ -76,6 +89,13 @@ header p {
   color: #facc15;
   margin-bottom: 10px;
   font-size: 1.1rem;
+}
+
+/* Description text */
+.article-info .description {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
 }
 
 .author {
@@ -131,6 +151,7 @@ header p {
   color: #facc15;
   cursor: pointer;
 }
+
 .filters {
   display: flex;
   justify-content: center;
@@ -138,8 +159,9 @@ header p {
   margin: 20px 0;
 }
 
-.filters select {
-  padding: 8px 15px;
+.filters select,
+.filters input {
+  padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #334155;
   background: #1e293b;
@@ -147,28 +169,20 @@ header p {
   cursor: pointer;
 }
 
-.filters select:hover {
+.filters select:hover,
+.filters input:hover {
   background: #facc15;
   color: #0f172a;
+}
+
+.filters input::placeholder {
+  color: #facc15;
 }
 
 .modal-video {
   width: 100%;
   margin: 15px 0;
   border-radius: 10px;
-}
-
-.filters input {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #334155;
-  background: #1e293b;
-  color: #facc15;
-  width: 200px;
-}
-
-.filters input::placeholder {
-  color: #facc15;
 }
 
 .bookmark-btn {
@@ -191,7 +205,6 @@ header p {
 .bookmark-btn:hover {
   opacity: 0.8;
 }
-
 
 .content {
   font-size: 1rem;
