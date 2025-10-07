@@ -121,7 +121,7 @@ const allPosts = [
     category: "Events",
     date: "Sept 3, 2025",
     image:
-      "https://images.unsplash.com/photo-1515165562835-c3b8a52e16fd?auto=format&fit=crop&w=800&q=60",
+      "https://cdn.media.amplience.net/i/kerzner/Al hadheerah-499 (1)",
     summary:
       "Hybrid events and interactive experiences are redefining nightlife and entertainment.",
     content:
@@ -162,7 +162,7 @@ const allPosts = [
     category: "Lifestyle",
     date: "Apr 15, 2025",
     image:
-      "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed56?auto=format&fit=crop&w=800&q=60",
+      "https://cdn.media.amplience.net/i/kerzner/One&Only_ThePalm_Safina_Bar_Loungers-0001-29_MASTER_V2",
     summary:
       "Urban lounges redefine relaxation by combining minimalism with high-end comfort.",
     content:

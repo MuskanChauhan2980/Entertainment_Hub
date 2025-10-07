@@ -1,4 +1,4 @@
- import React, { useState } from "react";
+import React, { useState } from "react";
 import "./Events.css";
 
 const eventsData = [
@@ -10,8 +10,8 @@ const eventsData = [
     city: "Mumbai",
     state: "Maharashtra",
     category: "restaurant",
-    image:
-      "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=800&q=60",
+    video:
+      "https://cdn.media.amplience.net/v/kerzner/roam-home-hero-video/mp4_720p",
     description:
       "An electrifying night with top DJs spinning the hottest tracks. Come and dance the night away at Skyline Lounge.",
   },
@@ -69,8 +69,8 @@ const eventsData = [
     id: 6,
     title: "King Papa Fridays – Papa Club",
     category: "nightclub",
-    image:
-      "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/06/KingPapaDubai-EventPic.jpg?fit=1080%2C1350&ssl=1",
+    video:
+      "https://linvite-production.nyc3.cdn.digitaloceanspaces.com/landing-page-site-assets/Member%20Event%20Videos/third-video.mp4",
     location: "Papa Club, Delhi, Delhi",
     city: "Delhi",
     state: "Delhi",
@@ -98,11 +98,12 @@ const eventsData = [
     state: "Karnataka",
     time: "Saturday 7 PM - 3 AM",
   },
-   {
+  {
     id: 9,
     title: "Dream Dinner Show – The Palace Lounge",
     category: "dinner",
-    image: "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/Dream-Event.jpg?fit=700%2C338&ssl=1",
+    image:
+      "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/Dream-Event.jpg?fit=700%2C338&ssl=1",
     location: "The Palace Lounge, Mumbai, Maharashtra",
     city: "Mumbai",
     state: "Maharashtra",
@@ -112,7 +113,8 @@ const eventsData = [
     id: 10,
     title: "King Papa Fridays – Skyline Club",
     category: "ladiesnight",
-    image: "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/06/KingPapaDubai-EventPic.jpg?fit=1080%2C1350&ssl=1",
+    image:
+      "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/06/KingPapaDubai-EventPic.jpg?fit=1080%2C1350&ssl=1",
     location: "Skyline Club, Delhi",
     city: "Delhi",
     state: "Delhi",
@@ -122,7 +124,8 @@ const eventsData = [
     id: 11,
     title: "Sky Dance Fridays – Blue Ocean Lounge",
     category: "brunch",
-    image: "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/07/OPAL-ROOM-DUBAI-3.jpg?fit=1080%2C1350&ssl=1",
+    video:
+      "https://linvite-production.nyc3.cdn.digitaloceanspaces.com/landing-page-site-assets/Member%20Event%20Videos/second-video.mp4",
     location: "Blue Ocean Lounge, Goa",
     city: "Goa",
     state: "Goa",
@@ -132,7 +135,8 @@ const eventsData = [
     id: 12,
     title: "Urban Project Mondays – The Lounge House",
     category: "afterparty",
-    image: "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/The-Rumba-Event.jpg?fit=700%2C338&ssl=1",
+    image:
+      "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/The-Rumba-Event.jpg?fit=700%2C338&ssl=1",
     location: "The Lounge House, Bangalore, Karnataka",
     city: "Bangalore",
     state: "Karnataka",
@@ -142,7 +146,8 @@ const eventsData = [
     id: 13,
     title: "Scandalous Thursdays – Bagatelle Club",
     category: "nightclub",
-    image: "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/07/SCANDALOUS.jpg?fit=1080%2C1920&ssl=1",
+    image:
+      "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/07/SCANDALOUS.jpg?fit=1080%2C1920&ssl=1",
     location: "Bagatelle Club, Mumbai, Maharashtra",
     city: "Mumbai",
     state: "Maharashtra",
@@ -152,7 +157,8 @@ const eventsData = [
     id: 14,
     title: "She’s With Us Saturdays – Ce La Vi",
     category: "Nightclub",
-    image: "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/She-is-with-us-event.jpg?fit=700%2C337&ssl=1",
+    image:
+      "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/She-is-with-us-event.jpg?fit=700%2C337&ssl=1",
     location: "Ce La Vi, Bangalore, Karnataka",
     city: "Bangalore",
     state: "Karnataka",
@@ -162,7 +168,8 @@ const eventsData = [
     id: 15,
     title: "Bora Bora Fridays – Kaimana Beach",
     category: "afterparty",
-    image: "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/06/BORA-BORA-POOL-PARTY-IN-DUBAI-1.jpg?fit=1080%2C1350&ssl=1",
+    image:
+      "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/06/BORA-BORA-POOL-PARTY-IN-DUBAI-1.jpg?fit=1080%2C1350&ssl=1",
     location: "Kaimana Beach, Goa",
     city: "Goa",
     state: "Goa",
@@ -172,7 +179,8 @@ const eventsData = [
     id: 16,
     title: "Summer Reunion Fridays – Surf Club",
     category: "beachclub",
-    image: "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/07/SCANDALOUS.jpg?fit=1080%2C1920&ssl=1",
+    video:
+   "https://linvite-production.nyc3.cdn.digitaloceanspaces.com/landing-page-site-assets/Member%20Event%20Videos/third-video.mp4",
     location: "Surf Club, Mumbai, Maharashtra",
     city: "Mumbai",
     state: "Maharashtra",
@@ -256,7 +264,20 @@ const Events = () => {
       <div className="events-grid">
         {filteredEvents.map((event) => (
           <div key={event.id} className="event-card">
-            <img src={event.image} alt={event.title} className="event-img" />
+            {event.image ? (
+              <img src={event.image} alt={event.title} className="event-img" />
+            ) : event.video ? (
+              <video
+                src={event.video}
+                className="event-img"
+                autoPlay
+                muted
+                loop
+              />
+            ) : (
+              <div className="no-media">No media available</div>
+            )}
+
             <div className="event-info">
               <h3>{event.title}</h3>
               <p>
