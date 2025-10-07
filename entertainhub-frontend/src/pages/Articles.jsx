@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Articles.css";
 
 const articleData = [
-  // People Features
+  // 12 realistic articles
   {
     id: 1,
     title: "Meet DJ Rohan – The Party Starter",
@@ -24,11 +24,9 @@ const articleData = [
     date: "September 30, 2025",
     readTime: "6 min read",
     trending: false,
-    image: "https://images.unsplash.com/photo-1543353071-087092ec3938?auto=format&fit=crop&w=800&q=60",
+    image:"https://cdn.media.amplience.net/i/kerzner/frantzen-Bjorn Frantzen",
     description: "Chef Ananya is redefining Indian cuisine with her innovative and modern recipes.",
   },
-
-  // Company/Venue Focused Articles
   {
     id: 3,
     title: "Luxury Lounge – Mumbai's Top Venue",
@@ -38,7 +36,7 @@ const articleData = [
     date: "August 25, 2025",
     readTime: "6 min read",
     trending: true,
-    image: "https://images.unsplash.com/photo-1559862932-1f7df0c5e6a7?auto=format&fit=crop&w=800&q=60",
+    image: "https://cdn.media.amplience.net/i/kerzner/siro-brandcampaign-haya_yoga_room--4881",
     description: "Luxury Lounge sets the benchmark for nightlife with its exquisite interiors and top-tier service.",
   },
   {
@@ -53,8 +51,6 @@ const articleData = [
     image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=800&q=60",
     description: "A perfect venue for luxury events, weddings, and corporate parties in Delhi.",
   },
-
-  // Blog/SEO Articles
   {
     id: 5,
     title: "Top 10 Nightlife Spots in Delhi",
@@ -76,104 +72,137 @@ const articleData = [
     date: "July 30, 2025",
     readTime: "5 min read",
     trending: true,
-    image: "https://images.unsplash.com/photo-1580894908361-6c2a5b7e23c4?auto=format&fit=crop&w=800&q=60",
+    image: "https://cdn.media.amplience.net/i/kerzner/BAS_DesertPoolVillaLifestyle2025_4885",
     description: "Discover new cocktail recipes to impress your guests at your next party or event.",
+  },
+  {
+    id: 7,
+    title: "Social & Casual Dining Spots in Dubai",
+    author: "Ananya Sharma",
+    avatar: "https://randomuser.me/api/portraits/women/22.jpg",
+    category: "Company/Venue",
+    date: "October 1, 2025",
+    readTime: "5 min read",
+    trending: true,
+    image: "https://images.unsplash.com/photo-1548946526-f69e2424cf45?auto=format&fit=crop&w=800&q=60",
+    description: "Explore relaxed dining spots in Dubai offering a variety of cuisines for all tastes.",
+  },
+  {
+    id: 8,
+    title: "Celebrity Chef Restaurants in Dubai",
+    author: "Rohan Mehta",
+    avatar: "https://randomuser.me/api/portraits/men/42.jpg",
+    category: "People Feature",
+    date: "September 28, 2025",
+    readTime: "6 min read",
+    trending: false,
+    image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=60",
+    description: "Dubai brings together a collection of restaurants helmed by renowned celebrity chefs.",
+  },
+  {
+    id: 9,
+    title: "Beach Clubs & Pool Bars – Dubai Guide",
+    author: "Muskan Chauhan",
+    avatar: "https://randomuser.me/api/portraits/women/28.jpg",
+    category: "Blog",
+    date: "August 18, 2025",
+    readTime: "5 min read",
+    trending: true,
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=60",
+    description: "Relax at Dubai's chic beach clubs and pool bars with the best day-to-night experiences.",
+  },
+  {
+    id: 10,
+    title: "Live Music Venues You Must Visit",
+    author: "Aarav Mehta",
+    avatar: "https://randomuser.me/api/portraits/men/37.jpg",
+    category: "Company/Venue",
+    date: "July 25, 2025",
+    readTime: "6 min read",
+    trending: false,
+    image: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=800&q=60",
+    description: "Experience live music at top-rated venues with electrifying atmospheres.",
+  },
+  {
+    id: 11,
+    title: "Innovative Party Themes for 2025",
+    author: "Simran Kaur",
+    avatar: "https://randomuser.me/api/portraits/women/50.jpg",
+    category: "Blog",
+    date: "August 10, 2025",
+    readTime: "5 min read",
+    trending: true,
+    image: "https://cdn.media.amplience.net/i/kerzner/roam-home-media-image",
+    description: "Creative and unique party theme ideas for your next big celebration.",
+  },
+  {
+    id: 12,
+    title: "The Best Rooftop Bars in Mumbai",
+    author: "Rohan Mehta",
+    avatar: "https://randomuser.me/api/portraits/men/44.jpg",
+    category: "Company/Venue",
+    date: "July 5, 2025",
+    readTime: "6 min read",
+    trending: false,
+    image: "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=800&q=60",
+    description: "Discover rooftop bars in Mumbai offering breathtaking views and signature cocktails.",
   },
 ];
 
 const Articles = () => {
   const [selectedArticle, setSelectedArticle] = useState(null);
-  const [categoryFilter, setCategoryFilter] = useState("All");
-  const [trendingFilter, setTrendingFilter] = useState("All");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [bookmarkedArticles, setBookmarkedArticles] = useState([]);
+  const [showDescription, setShowDescription] = useState(false);
 
-  const toggleBookmark = (id) => {
-    setBookmarkedArticles((prev) =>
-      prev.includes(id)
-        ? prev.filter((item) => item !== id)
-        : [...prev, id]
-    );
-  };
+  const handleReadMore = () => setShowDescription(true);
 
-  const filteredArticles = articleData.filter((article) => {
-    const matchesCategory =
-      categoryFilter === "All" || article.category === categoryFilter;
-    const matchesTrending =
-      trendingFilter === "All" ||
-      (trendingFilter === "Trending" && article.trending);
-    const matchesSearch =
-      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.description?.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesTrending && matchesSearch;
-  });
+  // Split articles into rows of 4
+  const rows = [];
+  for (let i = 0; i < articleData.length; i += 4) {
+    rows.push(articleData.slice(i, i + 4));
+  }
 
   return (
     <div className="articles-page">
       <header>
         <h1>Articles Hub</h1>
-        <p>Deep insights, stories, and analysis from industry professionals, venues, and trends.</p>
+        <p>Explore stories, insights, and trends from industry professionals and venues.</p>
       </header>
 
-      {/* Filters & Search */}
-      <section className="filters">
-        <input
-          type="text"
-          placeholder="Search articles..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <select
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-        >
-          <option value="All">All Categories</option>
-          <option value="People Feature">People Feature</option>
-          <option value="Company/Venue">Company/Venue</option>
-          <option value="Blog">Blog</option>
-        </select>
-        <select
-          value={trendingFilter}
-          onChange={(e) => setTrendingFilter(e.target.value)}
-        >
-          <option value="All">All</option>
-          <option value="Trending">Trending Only</option>
-        </select>
-      </section>
-
-      {/* Article Cards */}
-      <section className="featured-articles">
-        {filteredArticles.map((article) => (
-          <div
-            className={`article-card ${article.category === "People Feature" ? "people-feature" : ""}`}
-            key={article.id}
-            onClick={() => setSelectedArticle(article)}
-          >
-            <img src={article.image} alt={article.title} />
-            <div className="article-info">
-              <div className="article-category">{article.category}</div>
-              {article.trending && <div className="trending">🔥 Trending</div>}
-              <h3>{article.title}</h3>
-              {article.description && <p className="description">{article.description}</p>}
-              <div className="author">
-                <img src={article.avatar} alt={article.author} className="avatar" />
-                <span>{article.author}</span>
-              </div>
-              <button
-                className={`bookmark-btn ${bookmarkedArticles.includes(article.id) ? "active" : ""}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleBookmark(article.id);
+      {rows.map((row, idx) => (
+        <section key={idx} className="featured-articles">
+          {row.map((article) => (
+            <div
+              key={article.id}
+              className={`article-card ${
+                article.category === "People Feature"
+                  ? "people-feature"
+                  : article.category === "Company/Venue"
+                  ? "company-venue"
+                  : "blog"
+              }`}
+            >
+              <img
+                src={article.image}
+                alt={article.title}
+                onClick={() => {
+                  setSelectedArticle(article);
+                  setShowDescription(false);
                 }}
-              >
-                {bookmarkedArticles.includes(article.id) ? "★ Bookmarked" : "☆ Bookmark"}
-              </button>
+              />
+              <div className="article-info">
+                <div className="article-category">{article.category}</div>
+                {article.trending && <div className="trending">🔥 Trending</div>}
+                <h3>{article.title}</h3>
+                <div className="author">
+                  <img src={article.avatar} alt={article.author} className="avatar" />
+                  <span>{article.author}</span>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
-      </section>
+          ))}
+        </section>
+      ))}
 
-      {/* Modal */}
       {selectedArticle && (
         <div className="modal" onClick={() => setSelectedArticle(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -185,20 +214,18 @@ const Articles = () => {
               alt={selectedArticle.title}
               className="modal-img"
             />
-            {selectedArticle.video && (
-              <video
-                src={selectedArticle.video}
-                controls
-                className="modal-video"
-              />
-            )}
             <h2>{selectedArticle.title}</h2>
             <p className="author">
               <img src={selectedArticle.avatar} alt={selectedArticle.author} className="avatar" />
               {selectedArticle.author} • {selectedArticle.date} • {selectedArticle.readTime}
             </p>
-            {selectedArticle.description && <p className="description">{selectedArticle.description}</p>}
-            {selectedArticle.content && <p className="content">{selectedArticle.content}</p>}
+            {!showDescription ? (
+              <button className="read-more-btn" onClick={handleReadMore}>
+                Read More
+              </button>
+            ) : (
+              <p className="description">{selectedArticle.description}</p>
+            )}
           </div>
         </div>
       )}
