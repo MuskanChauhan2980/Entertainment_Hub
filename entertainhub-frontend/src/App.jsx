@@ -8,6 +8,7 @@ import Event from "./pages/Events"
 import Signup from "./pages/signup";
 import Login from "./pages/login";
 import EventDetails from "./pages/EventDetails";
+import ModelsPage from "./pages/ModelsPage";
 import "./App.css";
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
         <Route path="/article" element={<Articles/>}/> 
         <Route path ="/event" element={<Event/>}/>
         <Route path="/events/:id" element={<EventDetails />} />
-
+<Route path="/models" element={<ModelsPage />} />
       </Routes>
     </Router>
   );
