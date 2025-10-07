@@ -1,5 +1,6 @@
  import React, { useState } from "react";
 import "./Articles.css";
+import { useNavigate } from "react-router-dom";
 
 const articleData = [
   {
@@ -149,26 +150,23 @@ const articleData = [
 ];
 
 const Articles = () => {
-  const [selectedArticle, setSelectedArticle] = useState(null);
-  const [showFullDesc, setShowFullDesc] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [trendingFilter, setTrendingFilter] = useState("All");
-  const [authorFilter, setAuthorFilter] = useState("Author");
+  const [authorFilter, setAuthorFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [bookmarkedArticles, setBookmarkedArticles] = useState([]);
+  const navigate = useNavigate();
 
   const toggleBookmark = (id) => {
     setBookmarkedArticles((prev) =>
-      prev.includes(id)
-        ? prev.filter((item) => item !== id)
-        : [...prev, id]
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
   const filteredArticles = articleData.filter((article) => {
     const matchesCategory = categoryFilter === "All" || article.category === categoryFilter;
     const matchesTrending = trendingFilter === "All" || (trendingFilter === "Trending" && article.trending);
-    const matchesAuthor = authorFilter === "Author" || article.author === authorFilter;
+    const matchesAuthor = authorFilter === "All" || article.author === authorFilter;
     const matchesSearch =
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       article.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -192,21 +190,44 @@ const Articles = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
-          <option value="All">All Categories</option>
-          <option value="People Feature">People Feature</option>
-          <option value="Company/Venue">Company/Venue</option>
-          <option value="Blog">Blog</option>
-        </select>
-        <select value={trendingFilter} onChange={(e) => setTrendingFilter(e.target.value)}>
-          <option value="All">All</option>
-          <option value="Trending">Trending Only</option>
-        </select>
-        <select value={authorFilter} onChange={(e) => setAuthorFilter(e.target.value)}>
-          {authors.map((author, index) => (
-            <option key={index} value={author}>{author}</option>
+      </section>
+
+      <section className="filter-buttons-wrapper">
+        <div className="filter-buttons">
+          {["All", "People Feature", "Company/Venue", "Blog"].map((cat) => (
+            <button
+              key={cat}
+              className={`filter-button ${categoryFilter === cat ? "active" : ""}`}
+              onClick={() => setCategoryFilter(cat)}
+            >
+              {cat}
+            </button>
           ))}
-        </select>
+        </div>
+
+        <div className="filter-buttons">
+          {["All", "Trending"].map((trend) => (
+            <button
+              key={trend}
+              className={`filter-button ${trendingFilter === trend ? "active" : ""}`}
+              onClick={() => setTrendingFilter(trend)}
+            >
+              {trend}
+            </button>
+          ))}
+        </div>
+
+        <div className="filter-buttons">
+          {authors.map((author) => (
+            <button
+              key={author}
+              className={`filter-button ${authorFilter === author ? "active" : ""}`}
+              onClick={() => setAuthorFilter(author)}
+            >
+              {author}
+            </button>
+          ))}
+        </div>
       </section>
 
       <section className="featured-articles">
@@ -215,7 +236,11 @@ const Articles = () => {
             key={article.id}
             className={`article-card ${article.category === "People Feature" ? "people-feature" : article.category === "Company/Venue" ? "company-venue" : "blog"}`}
           >
-            <img src={article.image} alt={article.title} onClick={() => { setSelectedArticle(article); setShowFullDesc(false); }} />
+            <img
+              src={article.image}
+              alt={article.title}
+              onClick={() => navigate("/signup")}
+            />
             <div className="article-info">
               <div className="article-category">{article.category}</div>
               {article.trending && <div className="trending">🔥 Trending</div>}
@@ -230,28 +255,11 @@ const Articles = () => {
               >
                 {bookmarkedArticles.includes(article.id) ? "★ Bookmarked" : "☆ Bookmark"}
               </button>
+              <button className="read-more-btn" onClick={() => navigate("/signup")}>Read More</button>
             </div>
           </div>
         ))}
       </section>
-
-      {selectedArticle && (
-        <div className="modal" onClick={() => setSelectedArticle(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span className="close" onClick={() => setSelectedArticle(null)}>&times;</span>
-            <img src={selectedArticle.image} alt={selectedArticle.title} className="modal-img" />
-            <h2>{selectedArticle.title}</h2>
-            <p className="author">
-              <img src={selectedArticle.avatar} alt={selectedArticle.author} className="avatar" /> 
-              {selectedArticle.author} • {selectedArticle.date} • {selectedArticle.readTime}
-            </p>
-            <p className={`description ${showFullDesc ? "full" : "short"}`}>{selectedArticle.description}</p>
-            {!showFullDesc && (
-              <button className="read-more-btn" onClick={() => setShowFullDesc(true)}>Read More</button>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

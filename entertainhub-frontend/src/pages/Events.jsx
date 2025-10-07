@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Events.css";
+import { useNavigate } from "react-router-dom";
 
 const eventsData = [
   {
@@ -189,6 +190,7 @@ const eventsData = [
 ];
 
 const Events = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedCity, setSelectedCity] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
@@ -207,23 +209,28 @@ const Events = () => {
   const cities = ["all", "Mumbai", "Delhi", "Goa", "Bangalore"];
 
   const filteredEvents = eventsData.filter((event) => {
-    const matchCategory =
-      selectedCategory === "all" || event.category === selectedCategory;
+    const matchCategory = selectedCategory === "all" || event.category === selectedCategory;
     const matchCity = selectedCity === "all" || event.city === selectedCity;
-    const matchSearch = event.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    const matchSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase());
     return matchCategory && matchCity && matchSearch;
   });
+
+  const handleReadMore = () => {
+    navigate("/signup"); // redirect to signup page
+  };
+
+  const handleBookNow = () => {
+    navigate("/signup"); // redirect to signup page
+  };
 
   return (
     <div className="events-page">
       <h2>🎉 Upcoming Events</h2>
 
-      {/* 🔍 Top Nav (City Filter + Search) */}
+      {/* Filters */}
       <div className="events-top-nav">
         <div className="city-filter">
-          <label htmlFor="citySelect">📍 Address:</label>
+          <label htmlFor="citySelect">📍 City:</label>
           <select
             id="citySelect"
             value={selectedCity}
@@ -247,7 +254,7 @@ const Events = () => {
         </div>
       </div>
 
-      {/* 🏷️ Category Bar */}
+      {/* Category Bar */}
       <ul className="event-category-bar">
         {categories.map((cat) => (
           <li
@@ -260,20 +267,14 @@ const Events = () => {
         ))}
       </ul>
 
-      {/* 🎫 Event Cards */}
+      {/* Event Cards */}
       <div className="events-grid">
         {filteredEvents.map((event) => (
           <div key={event.id} className="event-card">
             {event.image ? (
               <img src={event.image} alt={event.title} className="event-img" />
             ) : event.video ? (
-              <video
-                src={event.video}
-                className="event-img"
-                autoPlay
-                muted
-                loop
-              />
+              <video src={event.video} className="event-img" autoPlay muted loop />
             ) : (
               <div className="no-media">No media available</div>
             )}
@@ -284,16 +285,23 @@ const Events = () => {
                 📍 {event.location}
                 <br /> 🕒 {event.time || event.date}
               </p>
+              <p className="short-desc">
+                {event.description?.length > 80
+                  ? event.description.slice(0, 80) + "..."
+                  : event.description}
+              </p>
               <div className="event-btns">
-                <button className="details-btn">Read More</button>
-                <button className="book-btn">Book Now</button>
+                <button className="details-btn" onClick={handleReadMore}>
+                  Read More
+                </button>
+                <button className="book-btn" onClick={handleBookNow}>
+                  Book Now
+                </button>
               </div>
             </div>
           </div>
         ))}
-        {filteredEvents.length === 0 && (
-          <p className="no-results">No events found.</p>
-        )}
+        {filteredEvents.length === 0 && <p className="no-results">No events found.</p>}
       </div>
     </div>
   );
