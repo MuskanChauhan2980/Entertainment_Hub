@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import "./Blog.css";
 
 const featuredPosts = [
@@ -120,8 +122,7 @@ const allPosts = [
     author: "Simran Kaur",
     category: "Events",
     date: "Sept 3, 2025",
-    image:
-      "https://cdn.media.amplience.net/i/kerzner/Al hadheerah-499 (1)",
+    image: "https://cdn.media.amplience.net/i/kerzner/Al hadheerah-499 (1)",
     summary:
       "Hybrid events and interactive experiences are redefining nightlife and entertainment.",
     content:
@@ -171,6 +172,7 @@ const allPosts = [
 ];
 
 const Blog = () => {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [selectedPost, setSelectedPost] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState("All");
@@ -223,25 +225,36 @@ const Blog = () => {
           <div className="featured-info">
             <h2>{currentPost.title}</h2>
             <p>{currentPost.summary}</p>
-            <button onClick={() => setSelectedPost(currentPost)}>Read More</button>
+            <button onClick={() => setSelectedPost(currentPost)}>
+              Read More
+            </button>
           </div>
-          <button className="nav-btn prev" onClick={prevSlide}>❮</button>
-          <button className="nav-btn next" onClick={nextSlide}>❯</button>
-          <div className="progress-bar" style={{ width: `${autoPlayProgress}%` }}></div>
+          <button className="nav-btn prev" onClick={prevSlide}>
+            ❮
+          </button>
+          <button className="nav-btn next" onClick={nextSlide}>
+            ❯
+          </button>
+          <div
+            className="progress-bar"
+            style={{ width: `${autoPlayProgress}%` }}
+          ></div>
         </div>
       </section>
 
       {/* Category Filter Buttons */}
       <section className="filter-buttons">
-        {["All", "Music", "Food", "Restaurants", "Events", "Lifestyle"].map((cat) => (
-          <button
-            key={cat}
-            className={categoryFilter === cat ? "active" : ""}
-            onClick={() => setCategoryFilter(cat)}
-          >
-            {cat}
-          </button>
-        ))}
+        {["All", "Music", "Food", "Restaurants", "Events", "Lifestyle"].map(
+          (cat) => (
+            <button
+              key={cat}
+              className={categoryFilter === cat ? "active" : ""}
+              onClick={() => setCategoryFilter(cat)}
+            >
+              {cat}
+            </button>
+          )
+        )}
       </section>
 
       {/* Blog Grid */}
@@ -278,9 +291,13 @@ const Blog = () => {
             />
             <h2>{selectedPost.title}</h2>
             <p className="meta">
-              {selectedPost.author} • {selectedPost.date} • {selectedPost.category}
+              {selectedPost.author} • {selectedPost.date} •{" "}
+              {selectedPost.category}
             </p>
             <p className="content">{selectedPost.content}</p>
+            <button className="join-btn" onClick={() => navigate("/signup")}>
+               Signup to Read Full Story
+            </button>
           </div>
         </div>
       )}

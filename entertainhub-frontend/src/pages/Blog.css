@@ -280,3 +280,18 @@ header p {
     font-size: 0.85rem;
   }
 }
+.join-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.join-btn:hover {
+  background-color: #e63946;
+}

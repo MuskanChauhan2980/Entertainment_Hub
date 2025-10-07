@@ -76,6 +76,7 @@ function  Home() {
       <header>
         <h1>Entertainment Hub</h1>
         <nav>
+          <button className="button">Signup</button>
           <div className="dropdown">
             <button className="dropbtn">Venues ▾</button>
             <div className="dropdown-content">
