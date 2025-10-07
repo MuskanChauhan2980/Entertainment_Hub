@@ -162,8 +162,9 @@ header p {
 
 .blog-card:hover {
   transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 10px 25px rgba(250, 204, 21, 0.3);
+  box-shadow: 0 10px 25px rgba(250, 204, 21, 0.5), 0 0 10px rgba(250, 204, 21, 0.3);
 }
+
 
 .blog-card img {
   width: 100%;
@@ -181,10 +182,12 @@ header p {
 }
 
 .blog-info h3 {
-  color: #facc15;
-  font-size: 1.2rem;
-  margin-bottom: 8px;
+  color: #ffd700; /* slightly brighter than #facc15 */
 }
+.blog-info .meta {
+  color: #b0bec5; /* slightly brighter than #94a3b8 */
+}
+
 
 .blog-info p {
   color: #cbd5e1;
@@ -192,10 +195,7 @@ header p {
   margin-bottom: 10px;
 }
 
-.blog-info .meta {
-  color: #94a3b8;
-  font-size: 0.8rem;
-}
+ 
 
 /* Modal */
 .modal {
@@ -228,6 +228,17 @@ header p {
   margin-bottom: 15px;
 }
 
+.modal-content {
+  overflow-y: auto;
+}
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #facc15;
+  border-radius: 3px;
+}
+
 .close {
   position: absolute;
   top: 10px;
@@ -255,6 +266,14 @@ header p {
     transform: scale(1);
   }
 }
+@keyframes slideIn {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.modal-content {
+  animation: slideIn 0.3s ease;
+}
+
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
@@ -270,16 +289,14 @@ header p {
 }
 
 @media (max-width: 480px) {
-  .featured-blog img {
-    height: 250px;
+  .blog-grid {
+    gap: 15px;
   }
-  .blog-info h3 {
-    font-size: 1rem;
-  }
-  .blog-info p {
-    font-size: 0.85rem;
+  .blog-info {
+    padding: 12px;
   }
 }
+
 .join-btn {
   margin-top: 15px;
   padding: 10px 20px;
@@ -294,4 +311,6 @@ header p {
 
 .join-btn:hover {
   background-color: #e63946;
+  box-shadow: 0 0 8px #ff4d4d;
 }
+
