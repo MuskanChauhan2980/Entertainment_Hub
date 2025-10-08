@@ -1,51 +1,56 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./login.css";
 
-const Login = () => {
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleChange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  };
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login data:", credentials);
-    // Add backend login logic here
+    try {
+      const response = await axios.post("/api/login", {
+        email,
+        password
+      });
+
+      setMessage(response.data.message);
+
+      // Redirect to OTP verification
+      navigate("/verify-otp", { state: { email } });
+    } catch (error) {
+      if (error.response) setMessage(error.response.data.message);
+      else setMessage("Login failed. Try again!");
+    }
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-container">
-        <h2>Welcome Back</h2>
-        <p>Login to continue exploring events & venues</p>
+    <div className="login-page">
+      <h2 className="login-heading">Login</h2>
+      <div className="login-container">
         <form onSubmit={handleSubmit}>
           <input
             type="email"
-            name="email"
-            placeholder="Email Address"
-            value={credentials.email}
-            onChange={handleChange}
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
             type="password"
-            name="password"
             placeholder="Password"
-            value={credentials.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit" className="auth-btn">
-            Login
-          </button>
+          <button type="submit">Login</button>
         </form>
-        <p className="auth-switch">
-          Don’t have an account? <a href="/signup">Sign Up</a>
-        </p>
+        {message && <p>{message}</p>}
       </div>
     </div>
   );
-};
-
-export default Login;
+}
