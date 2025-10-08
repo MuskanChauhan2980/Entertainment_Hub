@@ -13,13 +13,18 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      // 🔥 Send login request to backend
       const res = await axios.post("/api/login", { email, password });
 
+      // Save user & token locally
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      setMessage(res.data.message);
+      localStorage.setItem("token", res.data.token);
 
-      // If redirected from a blog post, go back there
+      setMessage(res.data.message || "Login successful!");
+
+      // Redirect user (if came from blog or directly to blog)
       const redirectTo = location.state?.from || "/blog";
       navigate(redirectTo);
     } catch (err) {
@@ -47,7 +52,7 @@ export default function Login() {
         />
         <button type="submit">Login</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className="message">{message}</p>}
     </div>
   );
 }

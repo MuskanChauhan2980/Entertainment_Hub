@@ -187,14 +187,16 @@ const Blog = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const user = JSON.parse(localStorage.getItem("user"));
-  const handleReadMore = (post) => {
-    if (!user) {
-      navigate("/login", { state: { from: "/blog" } });
-    } else {
-      setSelectedPost(post);
-    }
-  };
+ const user = JSON.parse(localStorage.getItem("user"));
+
+const handleReadMore = (post) => {
+  if (user && user.isSignup) {
+    setSelectedPost(post); // show full content
+  } else {
+    navigate("/signup", { state: { fromPostId: post.id } }); // redirect to signup
+  }
+};
+
 
   // Progress bar animation
   useEffect(() => {
@@ -306,7 +308,7 @@ const Blog = () => {
             <p className="content">{selectedPost.content}</p>
             <button
               className="join-btn"
-              onClick={() => handleReadMore(currentPost)}
+              onClick={() =>   {handleReadMore()}}
             >
               Read More
             </button>

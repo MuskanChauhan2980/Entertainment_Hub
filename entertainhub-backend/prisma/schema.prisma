@@ -21,6 +21,7 @@ model User {
   password    String
   otp         String?
   otpExpiry   DateTime?
+  isSignup  Boolean  @default(false) 
   verified    Boolean  @default(false)
   createdAt   DateTime @default(now())
 }

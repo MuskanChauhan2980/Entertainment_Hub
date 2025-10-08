@@ -89,9 +89,9 @@ export const verifyOTP = async (req, res) => {
     if (user.otp === otp && new Date() < user.otpExpiry) {
       await prisma.user.update({
         where: { email },
-        data: { verified: true, otp: null, otpExpiry: null }
+        data: { verified: true, otp: null, otpExpiry: null ,isSignup:true }
       });
-      res.json({ message: "OTP verified successfully! You can now log in." });
+      res.json({ message: "OTP verified successfully! You can now log in." ,user: { email: user.email, name: user.name, isSignup: true }});
     } else {
       res.status(400).json({ message: "Invalid or expired OTP" });
     }
@@ -106,21 +106,23 @@ export const verifyOTP = async (req, res) => {
 export const loginDetails = async (req, res) => {
   const { email, password } = req.body;
 
-  try {
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) return res.status(400).json({ message: "User not found" });
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid password" });
+  // Your logic: find user + check password
+  const user = await User.findOne({ where: { email } });
+  if (!user) return res.status(400).json({ message: "User not found" });
 
-    if (!user.verified)
-      return res.status(400).json({ message: "Please verify your OTP first" });
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid)
+    return res.status(401).json({ message: "Invalid password" });
 
-    res.json({
-      message: "Login successful",
-      user: { email: user.email, name: user.name },
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Login failed" });
-  }
+  const token = jwt.sign(
+    { id: user.id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }
+  );
+
+  res.json({
+    message: "Login successful",
+    user: { id: user.id, email: user.email },
+    token,
+  });
 };
