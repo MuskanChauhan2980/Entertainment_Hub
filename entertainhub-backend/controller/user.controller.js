@@ -102,4 +102,39 @@ export const verifyOTP = async (req, res) => {
 };
 
  
+// Login Route
+export const loginDetails = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return res.status(400).json({ message: "User not found" });
+
+    if (!user.verified) return res.status(400).json({ message: "Please verify your account first" });
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) return res.status(400).json({ message: "Invalid credentials" });
+
+    // Generate OTP for login
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 min
+
+    await prisma.user.update({
+      where: { email },
+      data: { otp, otpExpiry }
+    });
+
+    // Send OTP via email and WhatsApp
+    await Promise.all([
+      sendEmailOTP(email, otp),
+      sendWhatsAppOTP(user.phone, otp)
+    ]);
+
+    res.json({ message: "OTP sent to your Email and WhatsApp", email });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Login failed" });
+  }
+};
+
  
