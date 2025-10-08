@@ -1,84 +1,105 @@
-import express from "express";
-import dotenv from "dotenv";
-import { PrismaClient } from "@prisma/client";
+// controller/user.controller.js
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
-import { where } from "sequelize";
-import { verify } from "jsonwebtoken";
+import twilio from "twilio";
+import { PrismaClient } from "@prisma/client";
+import dotenv from "dotenv";
 
 dotenv.config();
-const app = express();
-app.use(express.json());
-
 const prisma = new PrismaClient();
 
-const signup = async (req,res)=>{
-    const {name,email,password,phone} = req.body;
-    const hashed = await bcrypt.hash(password, 10);
-    const otp = Math.floor(100000 + Math.random()*90000).toString();
-    const optExpiry = new Date(Date.now() + 10*60 *1000);
+// Twilio client
+const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
+// Generate 6-digit OTP
+const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-    try{
-        const exitingUser = await PrismaClientRustPanicError.findUnique({where:{email}});
-        if(exitingUser) return res.status(400).json({message:"User already exists"});
+// Send OTP via Email (already working)
+const sendEmailOTP = async (email, otp) => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+    logger: true, // enable debug logs
+    debug: true
+  });
 
-        await prisma.user.create({
-            data:{
-            name,
-            email,
-            password:hashed,
-            phone,
-            otp,
-            otpExpiry
-            }
-        });
+  await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "Your OTP for Entertainment Hub Signup",
+    text: `Your OTP is ${otp}. It will expire in 10 minutes.`
+  });
+};
 
-        const transpoter = nodemailer.createTransport({
-            service:"gmail",
-            auth:{
-                user:process.env.EMAIL,
-                pass:process.env.EMAIL_PASS
-            }
-        });
-
-
-
-        await transpoter.sendMail({
-            form:process.env.EMAIL,
-            to:email,
-            subject:"Your otp for signup",
-            text:`Your OTP is ${otp}. It expires in 10 minutes.`
-        });
-        res.json({message:"OTP sent to your email"})
-
-    }
-    catch(error){
-    res.status(500).json({message:"Something went wrong"});
-    }
-}
-
-
-const verifyOTP = async(res,req)=>{
-    const {email, otp} = req.body;
-    try{
-   const user = awaitprisma.user.findUnique({where:{email}});
-   if(!user) return res.status(400).json({message:"user not found"});
-
-   if(user.verified) return res.json({message:"Already verified"});
-
-   if(user.otp === otp && new Date() <user,otpExpiry){
-    await prisma.user.update({
-        where:{email},
-        date:{verify:true , otp: null , otpExpiry:null}
+// Send OTP via WhatsApp (updated)
+const sendWhatsAppOTP = async (phone, otp) => {
+  try {
+    const message = await twilioClient.messages.create({
+      from: 'whatsapp:+14155238886', // Twilio sandbox number
+      to: `whatsapp:${phone}`,       // recipient number with country code
+      body: `Your OTP for Entertainment Hub is ${otp}. Do not share it with anyone.`
     });
-    res.json({message: "Verification successful!"})
-   }
-   else{
-    res.status(400).json({message:"Invaild or expired OTP"})
-   }
+    console.log("WhatsApp OTP sent. SID:", message.sid);
+  } catch (error) {
+    console.error("Error sending WhatsApp OTP:", error);
+  }
+};
+
+// Signup Route
+export const signupDetails = async (req, res) => {
+  const { name, email, phone, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const otp = generateOTP();
+  const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 min
+
+  try {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) return res.status(400).json({ message: "User already exists" });
+
+    await prisma.user.create({
+      data: { name, email, phone, password: hashedPassword, otp, otpExpiry, verified: false }
+    });
+
+    // Send OTP via Email & WhatsApp
+    await Promise.all([
+      sendEmailOTP(email, otp),
+      sendWhatsAppOTP(phone, otp)
+    ]);
+
+    res.json({ message: "OTP sent successfully to your Email and WhatsApp" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Signup failed" });
+  }
+};
+
+// Verify OTP Route
+export const verifyOTP = async (req, res) => {
+  const { email, otp } = req.body;
+
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return res.status(400).json({ message: "User not found" });
+
+    if (user.verified) return res.json({ message: "Already verified" });
+
+    if (user.otp === otp && new Date() < user.otpExpiry) {
+      await prisma.user.update({
+        where: { email },
+        data: { verified: true, otp: null, otpExpiry: null }
+      });
+      res.json({ message: "OTP verified successfully! You can now log in." });
+    } else {
+      res.status(400).json({ message: "Invalid or expired OTP" });
     }
-    catch(error){
-    res.status(500).json({message:"server error"})
-    }
-}
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Verification failed" });
+  }
+};
+
+ 
+ 
