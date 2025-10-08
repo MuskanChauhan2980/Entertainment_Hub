@@ -9,14 +9,16 @@ import Signup from "./pages/signup";
 import Login from "./pages/login";
 import EventDetails from "./pages/EventDetails";
 import ModelsPage from "./pages/ModelsPage";
+import VerifyOTP from "./pages/verifyOTP";
 import "./App.css";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/signup" element={<Signup/>}/>
+        <Route path="/" element={<Signup/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/verify-otp" element={<VerifyOTP/>}/>
         <Route path="/" element={<Home />} />
         <Route path="/restaurants" element={<Restaurants />} />
         <Route path="/blog" element={<Blog/>}/> 

@@ -11,9 +11,10 @@ const prisma = new PrismaClient();
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:5172'],
-  credentials: true
+  origin: "*",
+   credentials: true 
 }));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
