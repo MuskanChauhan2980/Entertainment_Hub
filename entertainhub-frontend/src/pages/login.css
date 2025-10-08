@@ -1,4 +1,4 @@
- .auth-page {
+.login-container {
   background: #0f172a;
   color: #fff;
   min-height: 100vh;
@@ -9,96 +9,58 @@
   padding: 20px;
 }
 
-.auth-container {
-  background: rgba(30, 41, 59, 0.85);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(250, 204, 21, 0.3);
-  border-radius: 16px;
+.login-container form {
+  background: rgba(30, 41, 59, 0.9);
   padding: 40px 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(250, 204, 21, 0.3);
   width: 100%;
-  max-width: 400px;
+  max-width: 380px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
 }
 
-.auth-container:hover {
-  box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
-}
-
-.auth-container h2 {
+.login-container h2 {
   color: #facc15;
   font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.auth-container p {
-  color: #cbd5e1;
   margin-bottom: 20px;
-  font-size: 0.95rem;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-input {
+.login-container input {
   background: #1e293b;
   border: 1px solid #334155;
   color: #fff;
   border-radius: 8px;
   padding: 12px 14px;
   font-size: 1rem;
+  margin-bottom: 15px;
+  width: 100%;
   transition: 0.3s;
 }
 
-input:focus {
+.login-container input:focus {
   border-color: #facc15;
   outline: none;
   box-shadow: 0 0 5px rgba(250, 204, 21, 0.4);
 }
 
-.auth-btn {
+.login-container button {
   background: #facc15;
   color: #0f172a;
-  font-weight: 600;
   border: none;
   border-radius: 8px;
   padding: 12px;
+  font-weight: 600;
   cursor: pointer;
+  width: 100%;
   transition: 0.3s;
 }
 
-.auth-btn:hover {
+.login-container button:hover {
   opacity: 0.9;
   transform: translateY(-2px);
 }
 
-.auth-switch {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #94a3b8;
-}
-
-.auth-switch a {
-  color: #facc15;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.auth-switch a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .auth-container {
-    padding: 30px 20px;
-  }
-
-  .auth-container h2 {
-    font-size: 1.7rem;
-  }
+.login-container p {
+  margin-top: 15px;
+  color: #cbd5e1;
 }

@@ -187,6 +187,15 @@ const Blog = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const handleReadMore = (post) => {
+    if (!user) {
+      navigate("/login", { state: { from: "/blog" } });
+    } else {
+      setSelectedPost(post);
+    }
+  };
+
   // Progress bar animation
   useEffect(() => {
     const timer = setInterval(() => {
@@ -295,8 +304,11 @@ const Blog = () => {
               {selectedPost.category}
             </p>
             <p className="content">{selectedPost.content}</p>
-            <button className="join-btn" onClick={() => navigate("/signup")}>
-               Signup to Read Full Story
+            <button
+              className="join-btn"
+              onClick={() => handleReadMore(currentPost)}
+            >
+              Read More
             </button>
           </div>
         </div>
