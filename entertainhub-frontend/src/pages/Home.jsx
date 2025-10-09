@@ -1,60 +1,28 @@
-// src/App.jsx
 import React from "react";
 import "./Home.css";
- 
 
 const events = [
-  {
-    img: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=800&q=60",
-    title: "DJ Spectrum Night",
-    desc: "Experience electrifying beats under the stars.",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=800&q=60",
-    title: "Beach Music Festival",
-    desc: "Sun, sand, and sounds of summer.",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=800&q=60",
-    title: "Live Concert Night",
-    desc: "Feel the rhythm with the city’s top artists.",
-  },
+  { img: "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=800&q=60", title: "DJ Spectrum Night", desc: "Experience electrifying beats under the stars.", time: "10 PM - 2 AM" },
+  { img: "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=800&q=60", title: "Beach Music Festival", desc: "Sun, sand, and sounds of summer.", time: "4 PM - 11 PM" },
+  { img: "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=800&q=60", title: "Live Concert Night", desc: "Feel the rhythm with the city’s top artists.", time: "7 PM - 12 AM" },
 ];
 
 const venues = [
-  {
-    img: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed56?auto=format&fit=crop&w=800&q=60",
-    title: "Skyline Lounge",
-    desc: "Luxury meets music with stunning city views."
-  },
-  {
-    img: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=60",
-    title: "Wave Night Club",
-    desc: "Where every night becomes unforgettable.",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=60",
-    title: "Bluewater Restaurant",
-    desc: "Dine by the sea with world-class chefs.",
-  },
+  { img: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed56?auto=format&fit=crop&w=800&q=60", title: "Skyline Lounge", desc: "Luxury meets music with stunning city views." },
+  { img: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=60", title: "Wave Night Club", desc: "Where every night becomes unforgettable." },
+  { img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=60", title: "Bluewater Restaurant", desc: "Dine by the sea with world-class chefs." },
 ];
 
 const people = [
-  {
-    img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=60",
-    title: "DJ Ayesha",
-    desc: "Top electronic DJ across India’s nightclubs.",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=60",
-    title: "Chef Lorenzo",
-    desc: "Signature dishes from world cuisines.",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=800&q=60",
-    title: "Promoter Rhea",
-    desc: "Bringing unforgettable nightlife experiences.",
-  },
+  { img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=60", title: "DJ Ayesha", desc: "Top electronic DJ across India’s nightclubs.", premium: true },
+  { img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&w=800&q=60", title: "Chef Lorenzo", desc: "Signature dishes from world cuisines." },
+  { img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&w=800&q=60", title: "Promoter Rhea", desc: "Bringing unforgettable nightlife experiences.", premium: true },
+];
+
+const blogs = [
+  { img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=60", title: "Top 10 Nightclubs in Miami", desc: "Explore the best nightlife spots in Miami this season." },
+  { img: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=800&q=60", title: "Best Beach Clubs in Ibiza", desc: "Discover stunning beach clubs for summer parties." },
+  { img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=60", title: "Celebrity Chefs You Must Follow", desc: "Learn from the world’s most famous culinary artists." },
 ];
 
 const CardGrid = ({ items }) => (
@@ -62,21 +30,37 @@ const CardGrid = ({ items }) => (
     {items.map((item, index) => (
       <div className="card" key={index}>
         <img src={item.img} alt={item.title} />
-        <h4>{item.title}</h4>
-        <p>{item.desc}</p>
-        <p>{item.time?item.time:""}</p>
+        <div className="card-content">
+          <h4>{item.title} {item.premium && <span className="premium-badge">Premium</span>}</h4>
+          <p>{item.desc}</p>
+          {item.time && <p className="time">{item.time}</p>}
+        </div>
       </div>
     ))}
   </div>
 );
 
-function  Home() {
+function Home() {
   return (
     <div className="App">
+      {/* Top Sticky Bar 1: Social & Contact */}
+      <div className="top-bar">
+        <div className="social-icons">
+          <a href="#">IG</a><a href="#">FB</a><a href="#">LinkedIn</a>
+          <a href="#">TikTok</a><a href="#">Snapchat</a><a href="#">YouTube</a>
+        </div>
+        <div className="contact-icons">
+          <span>Email: info@entertainmenthub.com</span>
+          <span>WhatsApp: +1234567890</span>
+          <span>Call: +1234567890</span>
+        </div>
+      </div>
+
+      {/* Header */}
       <header>
         <h1>Entertainment Hub</h1>
         <nav>
-          <button className="button">Signup</button>
+          <button className="button">Signup / Login</button>
           <div className="dropdown">
             <button className="dropbtn">Venues ▾</button>
             <div className="dropdown-content">
@@ -107,38 +91,22 @@ function  Home() {
               <a href="#">Models</a>
             </div>
           </div>
-          <div className="dropdown">
-            <button className="dropbtn">Partner / Submit ▾</button>
-            <div className="dropdown-content">
-              <a href="#">DJ Party Submission</a>
-              <a href="#">Venue Registration</a>
-              <a href="#">Promoter Form</a>
-              <a href="#">Influencer Application</a>
-            </div>
-          </div>
-          <div className="dropdown">
-            <button className="dropbtn">Bookings ▾</button>
-            <div className="dropdown-content">
-              <a href="#">Guestlist</a>
-              <a href="#">Table Booking</a>
-              <a href="#">Chauffeur Service</a>
-            </div>
-          </div>
-          <div className="dropdown">
-            <button className="dropbtn">Premium ▾</button>
-            <div className="dropdown-content">
-              <a href="#">Membership Info</a>
-              <a href="#">Apply for Premium</a>
-            </div>
-          </div>
         </nav>
       </header>
 
+      {/* Hero Section */}
       <section className="hero">
         <h2>Discover the Best Events & Venues Near You</h2>
         <p>Restaurants • Beach Clubs • Nightlife • Music Festivals • Parties</p>
+        <div className="hero-cta">
+          <button>Explore Events</button>
+          <button>Explore Venues</button>
+          <button>Apply for Premium</button>
+        </div>
+        <input type="text" placeholder="Search by location, DJ, venue, cuisine..." className="hero-search"/>
       </section>
 
+      {/* Featured Sections */}
       <section className="section">
         <h3>🎧 Featured Events</h3>
         <CardGrid items={events} />
@@ -154,8 +122,27 @@ function  Home() {
         <CardGrid items={people} />
       </section>
 
+      {/* Quick CTA Section */}
+      <section className="cta-section">
+        <button>DJ Party Submission</button>
+        <button>Venue Registration</button>
+        <button>Promoter Form</button>
+        <button>Influencer Registration</button>
+        <button>Guestlist / Table Booking</button>
+      </section>
+
+      {/* Latest Blogs */}
+      <section className="section">
+        <h3>📰 Latest Articles & Blogs</h3>
+        <CardGrid items={blogs} />
+      </section>
+
+      {/* Footer */}
       <footer>
-        © 2025 Entertainment Hub | Designed by Muskan Chauhan
+        <p>© 2025 Entertainment Hub | Designed by Muskan Chauhan</p>
+        <p>
+          Terms & Conditions | Privacy Policy | Cookie Policy | Contact Us
+        </p>
       </footer>
     </div>
   );
