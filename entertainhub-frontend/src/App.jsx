@@ -12,6 +12,7 @@ import ArticleDetails from "./pages/ArticleDetails";
 import ModelsPage from "./pages/ModelsPage";
 import VerifyOTP from "./pages/verifyOTP";
 import CalendarPage from "./pages/CalendarPage";
+import ModelDetails from "./pages/ModelDetails";
 import "./App.css";
 
 function App() {
@@ -29,7 +30,9 @@ function App() {
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/articles/:id" element={<ArticleDetails />} />
 <Route path="/models" element={<ModelsPage />} />
+<Route path="/models/:id" element={<ModelDetails />} />
   <Route path="/calendar" element={<CalendarPage />} />
+
       </Routes>
     </Router>
   );
