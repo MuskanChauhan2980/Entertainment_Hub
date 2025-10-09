@@ -163,6 +163,20 @@ const Articles = () => {
     );
   };
 
+
+
+ 
+
+const handleReadMore = (article) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.isSignup) {
+    navigate("/signup");
+  } else {
+    navigate(`/articles/${article.id}`);
+  }
+};
+
+
   const filteredArticles = articleData.filter((article) => {
     const matchesCategory = categoryFilter === "All" || article.category === categoryFilter;
     const matchesTrending = trendingFilter === "All" || (trendingFilter === "Trending" && article.trending);
@@ -239,7 +253,6 @@ const Articles = () => {
             <img
               src={article.image}
               alt={article.title}
-              onClick={() => navigate("/signup")}
             />
             <div className="article-info">
               <div className="article-category">{article.category}</div>
@@ -255,12 +268,13 @@ const Articles = () => {
               >
                 {bookmarkedArticles.includes(article.id) ? "★ Bookmarked" : "☆ Bookmark"}
               </button>
-              <button className="read-more-btn" onClick={() => navigate("/signup")}>Read More</button>
+              <button className="read-more-btn" onClick={() =>  handleReadMore(article)}>Read More</button>
             </div>
           </div>
         ))}
       </section>
     </div>
+    
   );
 };
 

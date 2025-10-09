@@ -8,6 +8,7 @@ import Event from "./pages/Events"
 import Signup from "./pages/signup";
 import Login from "./pages/login";
 import EventDetails from "./pages/EventDetails";
+import ArticleDetails from "./pages/ArticleDetails";
 import ModelsPage from "./pages/ModelsPage";
 import VerifyOTP from "./pages/verifyOTP";
 import "./App.css";
@@ -25,6 +26,7 @@ function App() {
         <Route path="/article" element={<Articles/>}/> 
         <Route path ="/event" element={<Event/>}/>
         <Route path="/events/:id" element={<EventDetails />} />
+        <Route path="/articles/:id" element={<ArticleDetails />} />
 <Route path="/models" element={<ModelsPage />} />
       </Routes>
     </Router>

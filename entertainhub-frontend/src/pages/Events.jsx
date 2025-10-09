@@ -218,9 +218,9 @@ const Events = () => {
     return matchCategory && matchCity && matchSearch;
   });
 
-  const handleReadMore = () => {
-    navigate("/signup"); // redirect to signup page
-  };
+  // const handleReadMore = () => {
+  //   navigate("/signup"); // redirect to signup page
+  // };
 
   const handleBookNow = () => {
     navigate("/signup"); // redirect to signup page
