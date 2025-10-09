@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./Blog.css";
 
@@ -173,6 +173,7 @@ const allPosts = [
 
 const Blog = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [current, setCurrent] = useState(0);
   const [selectedPost, setSelectedPost] = useState(null);
   const [categoryFilter, setCategoryFilter] = useState("All");
@@ -187,16 +188,26 @@ const Blog = () => {
     return () => clearInterval(interval);
   }, []);
 
- const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
-const handleReadMore = (post) => {
+  // Handle Read More click
+ const handleReadMore = (post) => {
   if (user && user.isSignup) {
-    setSelectedPost(post); // show full content
+    navigate("/article", { state: { post } });  // go to article page
   } else {
-    navigate("/signup", { state: { fromPostId: post.id } }); // redirect to signup
+    navigate("/", { state: { fromPostId: post.id } });  // redirect to signup
   }
 };
 
+
+
+  useEffect(() => {
+    const postId = location.state?.postId;
+    if (postId) {
+      const post = allPosts.find((p) => p.id === postId);
+      if (post) setSelectedPost(post);
+    }
+  }, [location.state]);
 
   // Progress bar animation
   useEffect(() => {
@@ -217,7 +228,7 @@ const handleReadMore = (post) => {
 
   const currentPost = featuredPosts[current];
 
-  return (
+ return (
     <div className="blog-page">
       <header>
         <h1>Entertainment Hub Blog</h1>
@@ -231,12 +242,12 @@ const handleReadMore = (post) => {
             src={currentPost.image}
             alt={currentPost.title}
             className="fade"
-            onClick={() => setSelectedPost(currentPost)}
+            onClick={() => handleReadMore(currentPost)}
           />
           <div className="featured-info">
             <h2>{currentPost.title}</h2>
             <p>{currentPost.summary}</p>
-            <button onClick={() => setSelectedPost(currentPost)}>
+            <button onClick={() => handleReadMore(currentPost)}>
               Read More
             </button>
           </div>
@@ -274,7 +285,7 @@ const handleReadMore = (post) => {
           <div
             key={post.id}
             className="blog-card"
-            onClick={() => setSelectedPost(post)}
+            onClick={() => handleReadMore(post)}
           >
             <img src={post.image} alt={post.title} />
             <div className="blog-info">
@@ -308,7 +319,7 @@ const handleReadMore = (post) => {
             <p className="content">{selectedPost.content}</p>
             <button
               className="join-btn"
-              onClick={() =>   {handleReadMore()}}
+              onClick={() => handleReadMore(selectedPost)}
             >
               Read More
             </button>

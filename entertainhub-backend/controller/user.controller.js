@@ -69,7 +69,10 @@ export const signupDetails = async (req, res) => {
       sendWhatsAppOTP(phone, otp)
     ]);
 
-    res.json({ message: "OTP sent successfully to your Email and WhatsApp" });
+    res.json({
+      message: "OTP sent successfully to your Email and WhatsApp",
+      user: { email, name, isSignup: false }
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Signup failed" });
@@ -87,11 +90,15 @@ export const verifyOTP = async (req, res) => {
     if (user.verified) return res.json({ message: "Already verified" });
 
     if (user.otp === otp && new Date() < user.otpExpiry) {
-      await prisma.user.update({
-        where: { email },
-        data: { verified: true, otp: null, otpExpiry: null ,isSignup:true }
-      });
-      res.json({ message: "OTP verified successfully! You can now log in." ,user: { email: user.email, name: user.name, isSignup: true }});
+        await prisma.user.update({
+          where: { email },
+          data: { verified: true, otp: null, otpExpiry: null, isSignup: true }
+        });
+
+        res.json({
+          message: "OTP verified successfully! You can now log in.",
+          user: { email: user.email, name: user.name, isSignup: true }
+        });
     } else {
       res.status(400).json({ message: "Invalid or expired OTP" });
     }
@@ -101,7 +108,7 @@ export const verifyOTP = async (req, res) => {
   }
 };
 
- 
+
 // Login Route
 export const loginDetails = async (req, res) => {
   const { email, password } = req.body;
