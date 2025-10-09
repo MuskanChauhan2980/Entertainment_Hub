@@ -4,49 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./Blog.css";
 
 const featuredPosts = [
-  {
-    id: 1,
-    title: "The Future of Entertainment in 2025",
-    author: "Muskan Chauhan",
-    category: "Trends",
-    date: "October 6, 2025",
-    image:
-      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=60",
-    summary:
-      "Explore how AI and technology are transforming the entertainment industry — from interactive music to smart venues.",
-    content:
-      "As the world becomes more digital, entertainment experiences are blending physical and virtual spaces. AI-driven personalization, VR concerts, and real-time audience engagement are redefining how people connect with content.",
-  },
-  {
-    id: 2,
-    title: "Inside the Mind of a DJ: Crafting the Perfect Night",
-    author: "Aarav Mehta",
-    category: "Music",
-    date: "September 21, 2025",
-    image:
-      "https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=800&q=60",
-    summary:
-      "Discover what goes into creating unforgettable nights — from track selection to reading the crowd.",
-    content:
-      "DJs are modern-day storytellers, weaving emotions through music. Each set is carefully curated, balancing tempo, genre, and audience energy.",
-  },
-  {
-    id: 3,
-    title: "Culinary Art Meets Entertainment",
-    author: "Chef Lorenzo",
-    category: "Food",
-    date: "August 30, 2025",
-    image:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=60",
-    summary:
-      "Explore how fine dining has evolved into a complete entertainment experience.",
-    content:
-      "Restaurants today go beyond food — they create immersive environments where every element, from lighting to music, contributes to storytelling.",
-  },
-];
-
-const allPosts = [
-  // 🎤 MUSIC
+    // 🎤 MUSIC
   {
     id: 1,
     title: "Inside the Mind of a DJ: Crafting the Perfect Night",
@@ -59,6 +17,8 @@ const allPosts = [
       "Discover what goes into creating unforgettable nights — from track selection to reading the crowd.",
     content:
       "DJs are storytellers, curating emotions through sound and rhythm. Learn how they read the room and craft each moment.",
+    readMore:
+      "Behind every seamless DJ set is an intricate balance of timing, psychology, and intuition. Successful DJs don’t just play songs—they create journeys. The best ones read micro-expressions in the crowd, notice shifts in body language, and respond instantly through their music. A well-timed beat drop or a slow build-up can completely transform the room’s energy. \n\nTechnology has also reshaped the art of DJing. From vinyl records to digital controllers and AI-assisted beat matching, today’s DJs have endless tools at their disposal. Yet, the essence remains human—the emotional connection between the performer and the audience. What separates a good DJ from a great one isn’t just skill but the ability to understand and influence mood. When sound, lights, and emotion merge, the night becomes more than music—it becomes memory."
   },
   {
     id: 2,
@@ -72,6 +32,8 @@ const allPosts = [
       "AI tools like Soundful and Amper are transforming how producers create beats and melodies.",
     content:
       "Machine learning is reshaping sound design, automating repetitive tasks and enabling unique compositions.",
+    readMore:
+      "Artificial Intelligence has entered the studio, not to replace creativity, but to expand it. Producers now use AI platforms to generate melodies, chord progressions, or even entire tracks within minutes. These systems analyze massive datasets of music to understand genres, moods, and patterns, enabling musicians to experiment freely without starting from scratch. \n\nWhile some fear AI might dilute originality, many artists see it as a collaborator. It removes technical barriers, allowing musicians to focus on emotion and storytelling. The real innovation lies in how humans and algorithms work together—turning inspiration into sound at lightning speed. The future of music may not be fully human or machine, but a perfect harmony between both."
   },
 
   // 🍽️ FOOD / RESTAURANTS
@@ -87,6 +49,59 @@ const allPosts = [
       "Explore how fine dining has evolved into immersive entertainment experiences.",
     content:
       "Modern dining merges flavors with performance — creating unforgettable sensory journeys.",
+    readMore:
+      "In 2025, dining isn’t just about taste—it’s about experience. Restaurants have become stages, and chefs are the directors of multisensory performances. From live cooking stations to music synchronized with each course, the dining experience has transformed into theater. Guests are invited to feel, listen, and even interact with their food in creative ways. \n\nSome establishments use projection mapping to tell a story through visuals on the plate. Others pair dishes with soundscapes that enhance flavor perception—like pairing ocean sounds with seafood. These experiences blur the line between food and art. As technology evolves, the culinary world continues to redefine entertainment, offering guests not just meals, but memories they can taste."
+  },
+];
+
+const allPosts = [
+    // 🎤 MUSIC
+  {
+    id: 1,
+    title: "Inside the Mind of a DJ: Crafting the Perfect Night",
+    author: "Aarav Mehta",
+    category: "Music",
+    date: "Sept 21, 2025",
+    image:
+      "https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=800&q=60",
+    summary:
+      "Discover what goes into creating unforgettable nights — from track selection to reading the crowd.",
+    content:
+      "DJs are storytellers, curating emotions through sound and rhythm. Learn how they read the room and craft each moment.",
+    readMore:
+      "Behind every seamless DJ set is an intricate balance of timing, psychology, and intuition. Successful DJs don’t just play songs—they create journeys. The best ones read micro-expressions in the crowd, notice shifts in body language, and respond instantly through their music. A well-timed beat drop or a slow build-up can completely transform the room’s energy. \n\nTechnology has also reshaped the art of DJing. From vinyl records to digital controllers and AI-assisted beat matching, today’s DJs have endless tools at their disposal. Yet, the essence remains human—the emotional connection between the performer and the audience. What separates a good DJ from a great one isn’t just skill but the ability to understand and influence mood. When sound, lights, and emotion merge, the night becomes more than music—it becomes memory."
+  },
+  {
+    id: 2,
+    title: "How AI is Changing Music Production",
+    author: "Riya Sen",
+    category: "Music",
+    date: "July 15, 2025",
+    image:
+      "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=60",
+    summary:
+      "AI tools like Soundful and Amper are transforming how producers create beats and melodies.",
+    content:
+      "Machine learning is reshaping sound design, automating repetitive tasks and enabling unique compositions.",
+    readMore:
+      "Artificial Intelligence has entered the studio, not to replace creativity, but to expand it. Producers now use AI platforms to generate melodies, chord progressions, or even entire tracks within minutes. These systems analyze massive datasets of music to understand genres, moods, and patterns, enabling musicians to experiment freely without starting from scratch. \n\nWhile some fear AI might dilute originality, many artists see it as a collaborator. It removes technical barriers, allowing musicians to focus on emotion and storytelling. The real innovation lies in how humans and algorithms work together—turning inspiration into sound at lightning speed. The future of music may not be fully human or machine, but a perfect harmony between both."
+  },
+
+  // 🍽️ FOOD / RESTAURANTS
+  {
+    id: 3,
+    title: "Culinary Art Meets Entertainment",
+    author: "Chef Lorenzo",
+    category: "Restaurants",
+    date: "Aug 30, 2025",
+    image:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=60",
+    summary:
+      "Explore how fine dining has evolved into immersive entertainment experiences.",
+    content:
+      "Modern dining merges flavors with performance — creating unforgettable sensory journeys.",
+    readMore:
+      "In 2025, dining isn’t just about taste—it’s about experience. Restaurants have become stages, and chefs are the directors of multisensory performances. From live cooking stations to music synchronized with each course, the dining experience has transformed into theater. Guests are invited to feel, listen, and even interact with their food in creative ways. \n\nSome establishments use projection mapping to tell a story through visuals on the plate. Others pair dishes with soundscapes that enhance flavor perception—like pairing ocean sounds with seafood. These experiences blur the line between food and art. As technology evolves, the culinary world continues to redefine entertainment, offering guests not just meals, but memories they can taste."
   },
   {
     id: 4,
@@ -100,6 +115,8 @@ const allPosts = [
       "Why local street food stalls often outperform fancy restaurants in popularity.",
     content:
       "It’s not just about taste — it’s about connection, nostalgia, and authenticity.",
+    readMore:
+      "Street food is the heart of a city’s culture. Every bite carries history—recipes passed down for generations, perfected not in culinary schools but in open-air markets. Unlike fine dining, street food thrives on simplicity and soul. It represents community, affordability, and the comfort of shared experiences. \n\nThe reason these humble stalls often surpass high-end restaurants lies in emotion. People don’t just eat; they relive memories. The familiar aroma of samosas, the sizzling of kebabs, or the sweetness of jalebi connects people to home. In an age of globalization, street food remains authentic and real, reminding us that the most powerful flavor is nostalgia."
   },
   {
     id: 5,
@@ -113,6 +130,8 @@ const allPosts = [
       "From coastal cafes to rooftop bars — discover this year's best places to dine.",
     content:
       "Experience luxury, flavor, and innovation across the world's most inspiring restaurants.",
+    readMore:
+      "2025 has brought a new era of culinary innovation. From Tokyo’s futuristic sushi bars to Italy’s farm-to-table vineyards, chefs are blending tradition with technology like never before. The trend toward sustainability and local sourcing is shaping restaurant culture, making eco-conscious dining both luxurious and accessible. \n\nAmong the top destinations this year are Paris’s ‘Lumière’, known for its AI-assisted wine pairing, and Bali’s ‘Aqua Soul’, where meals are served underwater in glass domes. In New York, rooftop restaurants are redefining fine dining with views as breathtaking as their tasting menus. Whether you’re a food explorer or a casual diner, 2025’s culinary scene promises experiences that engage all senses."
   },
 
   // 🎉 EVENTS / NIGHTLIFE
@@ -127,6 +146,8 @@ const allPosts = [
       "Hybrid events and interactive experiences are redefining nightlife and entertainment.",
     content:
       "The next wave of events is social, digital, and data-driven — powered by tech and creativity.",
+    readMore:
+      "Event organizers in 2025 are embracing a new philosophy: engagement over attendance. The post-pandemic world accelerated the rise of hybrid experiences, merging physical venues with digital audiences. Fans can now interact in real time from anywhere through VR, AR, and social integration tools. \n\nData plays a vital role in crafting these experiences. From analyzing attendee behavior to predicting engagement patterns, AI helps promoters design events that feel personal and dynamic. The future belongs to immersive storytelling—events that don’t just entertain but connect emotionally, blurring the line between performer and participant."
   },
   {
     id: 7,
@@ -140,6 +161,8 @@ const allPosts = [
       "Eco-friendly clubs and venues are proving sustainability can also be stylish.",
     content:
       "From reusable cups to energy-efficient lighting, the entertainment industry is going green.",
+    readMore:
+      "Sustainability is no longer just a trend—it’s a movement reshaping the nightlife industry. In 2025, eco-conscious clubs are using renewable energy, water-saving systems, and zero-plastic policies to redefine what it means to party responsibly. Venues in Berlin, Amsterdam, and Mumbai are leading the charge with dance floors powered by kinetic energy generated from the crowd’s movement. \n\nThis shift isn’t only environmental but cultural. Guests today value experiences that align with their ethics. Green clubs demonstrate that luxury and responsibility can coexist—where neon lights meet solar panels, and music fuels both joy and sustainability. It’s proof that every beat can leave a positive footprint."
   },
 
   // 💫 LIFESTYLE
@@ -155,6 +178,8 @@ const allPosts = [
       "Technology has changed how we relax, from virtual yoga to digital detox retreats.",
     content:
       "Wellness is now digital — personalized experiences guided by AI-driven health apps.",
+    readMore:
+      "The definition of relaxation has evolved in the digital age. From mindfulness apps that track breathing patterns to virtual reality getaways that transport users to tropical beaches, technology is personalizing leisure like never before. People now meditate with headsets, attend remote fitness classes, and even experience AI-guided therapy. \n\nIronically, the same devices that cause stress are now helping manage it. Tech-powered relaxation focuses on balance—integrating digital wellness with mindfulness. As innovations continue, the line between technology and tranquility will keep blurring, making well-being smarter, more accessible, and deeply personal."
   },
   {
     id: 9,
@@ -168,7 +193,9 @@ const allPosts = [
       "Urban lounges redefine relaxation by combining minimalism with high-end comfort.",
     content:
       "Modern spaces are blending art, light, and sound to create stress-free atmospheres.",
-  },
+    readMore:
+      "Urban lounges have become the new sanctuaries for modern professionals. Designed with soft lighting, neutral palettes, and ergonomic comfort, they offer an escape from the city’s chaos without leaving it. These lounges fuse art, design, and sensory experiences to create calm yet luxurious atmospheres. \n\nThe rise of urban lounges reflects a broader shift in lifestyle priorities—people crave comfort with sophistication. Whether it’s rooftop lounges with panoramic views or intimate indoor spaces with curated soundscapes, the trend celebrates mindful luxury. It’s less about extravagance and more about emotional well-being in an overstimulated world."
+  }
 ];
 
 const Blog = () => {
@@ -193,7 +220,7 @@ const Blog = () => {
   // Handle Read More click
  const handleReadMore = (post) => {
   if (user && user.isSignup) {
-    navigate("/article", { state: { post } });  // go to article page
+     setSelectedPost(post);  // go to article page
   } else {
     navigate("/", { state: { fromPostId: post.id } });  // redirect to signup
   }
@@ -285,7 +312,9 @@ const Blog = () => {
           <div
             key={post.id}
             className="blog-card"
-            onClick={() => handleReadMore(post)}
+            onClick={() => handleReadMore(post)
+
+            }
           >
             <img src={post.image} alt={post.title} />
             <div className="blog-info">
@@ -294,6 +323,12 @@ const Blog = () => {
               <span className="meta">
                 {post.author} • {post.date} • {post.category}
               </span>
+            <button
+              className="join-btn"
+              onClick={() => handleReadMore(selectedPost)}
+            >
+              Read More
+            </button>
             </div>
           </div>
         ))}
@@ -317,12 +352,7 @@ const Blog = () => {
               {selectedPost.category}
             </p>
             <p className="content">{selectedPost.content}</p>
-            <button
-              className="join-btn"
-              onClick={() => handleReadMore(selectedPost)}
-            >
-              Read More
-            </button>
+            <p className="content">{selectedPost.readMore}</p>
           </div>
         </div>
       )}
