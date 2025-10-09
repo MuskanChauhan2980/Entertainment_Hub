@@ -189,6 +189,8 @@ const eventsData = [
   },
 ];
 
+
+
 const Events = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -217,14 +219,15 @@ const Events = () => {
       .includes(searchTerm.toLowerCase());
     return matchCategory && matchCity && matchSearch;
   });
-
-  // const handleReadMore = () => {
-  //   navigate("/signup"); // redirect to signup page
-  // };
-
-  const handleBookNow = () => {
-    navigate("/signup"); // redirect to signup page
-  };
+ 
+  const handleReadMore = (event) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.isSignup) {
+    navigate("/");
+  } else {
+    navigate(`/events/${event.id}`);
+  }
+};
 
   return (
     <div className="events-page">
@@ -302,12 +305,12 @@ const Events = () => {
               <div className="event-btns">
                 <button
                   className="details-btn"
-                  onClick={() => navigate(`/events/${event.id}`)}
+                  onClick={() =>  handleReadMore(event)}
                 >
                   Read More
                 </button>
 
-                <button className="book-btn" onClick={handleBookNow}>
+                <button className="book-btn" onClick={()=>handleReadMore(event)}>
                   Book Now
                 </button>
               </div>

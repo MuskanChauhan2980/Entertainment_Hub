@@ -13,6 +13,12 @@ const EventDetails = () => {
     return <p className="no-event">Event not found.</p>;
   }
 
+    const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.isSignup) {
+    navigate("/signup");
+    return null;
+  }
+
   return (
     <div className="event-details-page">
       <button className="back-btn" onClick={() => navigate(-1)}>
@@ -33,7 +39,7 @@ const EventDetails = () => {
         <p>📍 Location: {event.location}</p>
         <p>🕒 {event.time || event.date}</p>
         <p>{event.description}</p>
-        <button className="signup-btn" onClick={() => navigate("/signup")}>
+        <button className="signup-btn" onClick={() => navigate("/premium")}>
            Take Premium to Attend 
         </button>
       </div>
