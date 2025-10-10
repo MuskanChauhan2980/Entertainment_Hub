@@ -1,6 +1,17 @@
 import React from "react";
 import "./Home.css";
 import UpcomingEventsPreview from "../components/UpcomingEventsPreview.jsx";
+import {
+  FaInstagram,
+  FaFacebook,
+  FaLinkedin,
+  FaYoutube,
+  FaTwitter,
+  FaWhatsapp,
+  FaTelegramPlane,
+  FaPhone,
+  FaEnvelope,
+} from "react-icons/fa";
 
 const events = [
   {
@@ -24,10 +35,12 @@ const events = [
 ];
 
 const venues = [
-  {
-    img: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed56?auto=format&fit=crop&w=800&q=60",
-    title: "Skyline Lounge",
-    desc: "Luxury meets music with stunning city views.",
+ {
+    title: "King Papa Fridays – Papa Club",
+        img:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=60",
+    desc:
+      "Experience the biggest live concert of the year with your favorite rock bands performing live on stage.",
   },
   {
     img: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=60",
@@ -35,9 +48,11 @@ const venues = [
     desc: "Where every night becomes unforgettable.",
   },
   {
-    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=60",
-    title: "Bluewater Restaurant",
-    desc: "Dine by the sea with world-class chefs.",
+    img:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=60",
+    desc:
+      "Taste the world! A grand food carnival bringing together chefs and cuisines from around the globe.",
+    title: "Bluewater Restaurant"
   },
 ];
 
@@ -79,6 +94,24 @@ const blogs = [
   },
 ];
 
+const article = [
+  {
+    img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=60",
+    title: "Top 10 Nightclubs in Miami",
+    desc: "Explore the best nightlife spots in Miami this season.",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=800&q=60",
+    title: "Best Beach Clubs in Ibiza",
+    desc: "Discover stunning beach clubs for summer parties.",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=60",
+    title: "Celebrity Chefs You Must Follow",
+    desc: "Learn from the world’s most famous culinary artists.",
+  },
+];
+
 const CardGrid = ({ items }) => (
   <div className="grid">
     {items.map((item, index) => (
@@ -100,20 +133,39 @@ const CardGrid = ({ items }) => (
 function Home() {
   return (
     <div className="App">
-      {/* Top Sticky Bar 1: Social & Contact */}
-      <div className="top-bar">
+      {/* ✅ Top Bar: Social media + Contact Info */}
+      <div className="top-bar1">
         <div className="social-icons">
-          <a href="#">IG</a>
-          <a href="#">FB</a>
-          <a href="#">LinkedIn</a>
-          <a href="#">TikTok</a>
-          <a href="#">Snapchat</a>
-          <a href="#">YouTube</a>
+          <a href="#">
+            <FaInstagram />
+          </a>
+          <a href="#">
+            <FaFacebook />
+          </a>
+          <a href="#">
+            <FaLinkedin />
+          </a>
+          <a href="#">
+            <FaYoutube />
+          </a>
+          <a href="#">
+            <FaTwitter />
+          </a>
         </div>
-        <div className="contact-icons">
-          <span>Email: info@entertainmenthub.com</span>
-          <span>WhatsApp: +1234567890</span>
-          <span>Call: +1234567890</span>
+
+        <div className="contact-info">
+          <span>
+            <FaEnvelope /> info@entertainmenthub.com
+          </span>
+          <span>
+            <FaPhone /> +1234567890
+          </span>
+          <span>
+            <FaWhatsapp /> WhatsApp
+          </span>
+          <span>
+            <FaTelegramPlane /> Telegram
+          </span>
         </div>
       </div>
 
@@ -122,6 +174,7 @@ function Home() {
         <h1>Entertainment Hub</h1>
         <nav>
           <button className="button">Signup / Login</button>
+
           <div className="dropdown">
             <button className="dropbtn">Venues ▾</button>
             <div className="dropdown-content">
@@ -133,6 +186,7 @@ function Home() {
               <a href="#">Private Clubs</a>
             </div>
           </div>
+
           <div className="dropdown">
             <button className="dropbtn">Events ▾</button>
             <div className="dropdown-content">
@@ -142,6 +196,7 @@ function Home() {
               <a href="#">Special Events</a>
             </div>
           </div>
+
           <div className="dropdown">
             <button className="dropbtn">People ▾</button>
             <div className="dropdown-content">
@@ -159,11 +214,13 @@ function Home() {
       <section className="hero">
         <h2>Discover the Best Events & Venues Near You</h2>
         <p>Restaurants • Beach Clubs • Nightlife • Music Festivals • Parties</p>
+
         <div className="hero-cta">
           <button>Explore Events</button>
           <button>Explore Venues</button>
           <button>Apply for Premium</button>
         </div>
+
         <input
           type="text"
           placeholder="Search by location, DJ, venue, cuisine..."
@@ -202,8 +259,49 @@ function Home() {
 
       {/* Latest Blogs */}
       <section className="section">
-        <h3>📰 Latest Articles & Blogs</h3>
-        <CardGrid items={blogs} />
+        <h3>📰 Latest Blogs & Articles</h3>
+
+        <div className="blog-article-section">
+          {/* Blogs */}
+          <div className="blog-group">
+            <h4>Blogs</h4>
+            <div className="blog-article-grid">
+              {blogs.slice(0, 4).map((item, index) => (
+                <div className="card" key={index}>
+                  <img src={item.img} alt={item.title} />
+                  <div className="card-content">
+                    <h4>{item.title}</h4>
+                    <p>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="blog-buttons">
+          <button>View All Blog</button>
+        </div>
+
+          {/* Articles */}
+          <div className="article-group">
+            <h4>Articles</h4>
+            <div className="blog-article-grid">
+              {article.slice(0, 4).map((item, index) => (
+                <div className="card" key={index}>
+                  <img src={item.img} alt={item.title} />
+                  <div className="card-content">
+                    <h4>{item.title}</h4>
+                    <p>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="blog-buttons">
+          <button>View All Articles</button>
+        </div>
       </section>
 
       {/* Footer */}

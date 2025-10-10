@@ -15,7 +15,7 @@ export default function UpcomingEventsPreview() {
   return (
     <section className="upcoming-section">
       <h3>🗓️ Upcoming Events</h3>
-      <div className="upcoming-grid">
+      <div className="upcoming-flex">
         {upcomingEvents.map((event, index) => (
           <div className="upcoming-card" key={index}>
             <p className="event-date">{event.date}</p>
