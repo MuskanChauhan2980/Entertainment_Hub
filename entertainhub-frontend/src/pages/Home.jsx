@@ -1,5 +1,6 @@
 import React from "react";
 import "./Home.css";
+import { useNavigate } from "react-router-dom";
 import UpcomingEventsPreview from "../components/UpcomingEventsPreview.jsx";
 import {
   FaInstagram,
@@ -112,10 +113,10 @@ const article = [
   },
 ];
 
-const CardGrid = ({ items }) => (
+const CardGrid = ({ items ,onClick }) => (
   <div className="grid">
     {items.map((item, index) => (
-      <div className="card" key={index}>
+      <div className="card" key={index} onClick={() => onClick(item)}>
         <img src={item.img} alt={item.title} />
         <div className="card-content">
           <h4>
@@ -131,80 +132,90 @@ const CardGrid = ({ items }) => (
 );
 
 function Home() {
+  const navigate = useNavigate()
   return (
     <div className="App">
       {/* ✅ Top Bar: Social media + Contact Info */}
       <div className="top-bar1">
-        <div className="social-icons">
-          <a href="#">
-            <FaInstagram />
-          </a>
-          <a href="#">
-            <FaFacebook />
-          </a>
-          <a href="#">
-            <FaLinkedin />
-          </a>
-          <a href="#">
-            <FaYoutube />
-          </a>
-          <a href="#">
-            <FaTwitter />
-          </a>
-        </div>
+  <div className="social-icons">
+    <a href="https://www.instagram.com/yourpage" target="_blank" rel="noopener noreferrer">
+      <FaInstagram />
+    </a>
+    <a href="https://www.facebook.com/yourpage" target="_blank" rel="noopener noreferrer">
+      <FaFacebook />
+    </a>
+    <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+      <FaLinkedin />
+    </a>
+    <a href="https://www.youtube.com/@yourchannel" target="_blank" rel="noopener noreferrer">
+      <FaYoutube />
+    </a>
+    <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener noreferrer">
+      <FaTwitter />
+    </a>
+  </div>
 
-        <div className="contact-info">
-          <span>
-            <FaEnvelope /> info@entertainmenthub.com
-          </span>
-          <span>
-            <FaPhone /> +1234567890
-          </span>
-          <span>
-            <FaWhatsapp /> WhatsApp
-          </span>
-          <span>
-            <FaTelegramPlane /> Telegram
-          </span>
-        </div>
-      </div>
+  <div className="contact-info">
+    <span>
+      <a href="mailto:info@entertainmenthub.com">
+        <FaEnvelope /> info@entertainmenthub.com
+      </a>
+    </span>
+    <span>
+      <a href="tel:+1234567890">
+        <FaPhone /> +1234567890
+      </a>
+    </span>
+    <span>
+      <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
+        <FaWhatsapp /> WhatsApp
+      </a>
+    </span>
+    <span>
+      <a href="https://t.me/yourtelegramhandle" target="_blank" rel="noopener noreferrer">
+        <FaTelegramPlane /> Telegram
+      </a>
+    </span>
+  </div>
+</div>
+
 
       {/* Header */}
       <header>
         <h1>Entertainment Hub</h1>
         <nav>
-          <button className="button">Signup / Login</button>
+          <button className="button" onClick={()=>{navigate('/signup')}}>Signup / Login</button>
 
           <div className="dropdown">
             <button className="dropbtn">Venues ▾</button>
             <div className="dropdown-content">
-              <a href="#">Restaurants</a>
-              <a href="#">Beach Clubs</a>
-              <a href="#">Night Clubs</a>
-              <a href="#">Lounges</a>
-              <a href="#">Pools</a>
-              <a href="#">Private Clubs</a>
+              <a href="/restaurants">Restaurants</a>
+              <a href="/">Beach Clubs</a>
+              <a href="/event">Night Clubs</a>
+              <a href="/event">Lounges</a>
+              <a href="/event">Pools</a>
+              <a href="/event">Private Clubs</a>
             </div>
           </div>
 
           <div className="dropdown">
             <button className="dropbtn">Events ▾</button>
             <div className="dropdown-content">
-              <a href="#">DJ Parties</a>
-              <a href="#">Concerts</a>
-              <a href="#">Music Festivals</a>
-              <a href="#">Special Events</a>
+              <a href="/event">DJ Parties</a>
+              <a href="/event">Concerts</a>
+              <a href="/event">Music Festivals</a>
+              <a href="/event">Special Events</a>
             </div>
           </div>
 
           <div className="dropdown">
             <button className="dropbtn">People ▾</button>
             <div className="dropdown-content">
-              <a href="#">DJs</a>
-              <a href="#">Chefs</a>
-              <a href="#">Promoters</a>
-              <a href="#">Influencers</a>
-              <a href="#">Models</a>
+              <a href="/featuredPeople">DJs</a>
+              <a href="/featuredPeople">Chefs</a>
+              <a href="/featuredPeople">Promoters</a>
+              <a href="/featuredPeople">Influencers</a>
+              <a href="/model">Models</a>
             </div>
           </div>
         </nav>
@@ -216,9 +227,10 @@ function Home() {
         <p>Restaurants • Beach Clubs • Nightlife • Music Festivals • Parties</p>
 
         <div className="hero-cta">
-          <button>Explore Events</button>
-          <button>Explore Venues</button>
-          <button>Apply for Premium</button>
+        <button onClick={() => navigate('/event')}>Explore Events</button>
+
+          <button onClick={()=> navigate('/venues')}>Explore Venues</button>
+          <button onClick={()=>navigate('/premiumDetails')}>Apply for Premium</button>
         </div>
 
         <input
@@ -231,7 +243,7 @@ function Home() {
       {/* Featured Sections */}
       <section className="section">
         <h3>🎧 Featured Events</h3>
-        <CardGrid items={events} />
+        <CardGrid onClick={()=>{navigate('/event')}} items={events} />
       </section>
 
       <section className="section">
@@ -240,12 +252,12 @@ function Home() {
 
       <section className="section">
         <h3>🏛️ Popular Venues</h3>
-        <CardGrid items={venues} />
+        <CardGrid  onClick={()=>{navigate("/venus")}} items={venues} />
       </section>
 
       <section className="section">
-        <h3>👥 Featured People</h3>
-        <CardGrid items={people} />
+        <h3>👥Models</h3>
+        <CardGrid onClick={()=>{navigate('/models')}}  items={people} />
       </section>
 
       {/* Quick CTA Section */}
@@ -266,7 +278,7 @@ function Home() {
           <div className="blog-group">
             <h4>Blogs</h4>
             <div className="blog-article-grid">
-              {blogs.slice(0, 4).map((item, index) => (
+              {blogs.slice(0, 2).map((item, index) => (
                 <div className="card" key={index}>
                   <img src={item.img} alt={item.title} />
                   <div className="card-content">
@@ -279,14 +291,14 @@ function Home() {
           </div>
 
           <div className="blog-buttons">
-          <button>View All Blog</button>
+          <button onClick={()=>{navigate('/blog')}}>View All Blog</button>
         </div>
 
           {/* Articles */}
           <div className="article-group">
             <h4>Articles</h4>
             <div className="blog-article-grid">
-              {article.slice(0, 4).map((item, index) => (
+              {article.slice(1, 4).map((item, index) => (
                 <div className="card" key={index}>
                   <img src={item.img} alt={item.title} />
                   <div className="card-content">
@@ -300,7 +312,7 @@ function Home() {
         </div>
 
         <div className="blog-buttons">
-          <button>View All Articles</button>
+          <button onClick={()=>{navigate('/article')}}>View All Articles</button>
         </div>
       </section>
 

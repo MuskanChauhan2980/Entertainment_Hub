@@ -54,6 +54,7 @@ body, html {
 }
 
 .top-bar1 .contact-info {
+  color:white;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -64,6 +65,7 @@ body, html {
   display: flex;
   align-items: center;
   gap: 6px;
+  color:white;
 }
 
 /* ✅ Responsive Fix */
