@@ -13,6 +13,7 @@ import ModelsPage from "./pages/ModelsPage";
 import VerifyOTP from "./pages/verifyOTP";
 import CalendarPage from "./pages/CalendarPage";
 import ModelDetails from "./pages/ModelDetails";
+import SecurePayment from "./pages/premium";
 import "./App.css";
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
 <Route path="/models" element={<ModelsPage />} />
 <Route path="/models/:id" element={<ModelDetails />} />
   <Route path="/calendar" element={<CalendarPage />} />
-
+<Route path="/premium" element={<SecurePayment />} />
       </Routes>
     </Router>
   );

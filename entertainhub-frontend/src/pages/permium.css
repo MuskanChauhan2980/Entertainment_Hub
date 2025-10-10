@@ -1,0 +1,114 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+}
+
+.field-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.card-details-section {
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 25px;
+  margin-bottom: 30px;
+  background-color: #f9f9f9;
+}
+
+.card-details-section h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #007bff;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+#card-element {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+}
+
+#submit-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#submit-button:hover {
+  background-color: #218838;
+}
+
+#submit-button:disabled {
+  background-color: #9c9c9c;
+  cursor: not-allowed;
+}
+
+#payment-message {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+  color: red;
+}
+
+#card-errors {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
