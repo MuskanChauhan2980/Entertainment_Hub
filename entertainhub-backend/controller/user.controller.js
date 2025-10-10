@@ -110,27 +110,45 @@ export const verifyOTP = async (req, res) => {
 };
 
 
+ 
 // Login Route
 export const loginDetails = async (req, res) => {
   const { email, password } = req.body;
 
-  // Your logic: find user + check password
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) return res.status(400).json({ message: "User not found" });
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) return res.status(400).json({ message: "User not found" });
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid)
-    return res.status(401).json({ message: "Invalid password" });
+    // Check password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid)
+      return res.status(401).json({ message: "Invalid password" });
 
-  const token = jwt.sign(
-    { id: user.id, email: user.email },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" }
-  );
+    // Check if user verified OTP
+    if (!user.verified) {
+      return res.status(403).json({
+        message: "Please verify your OTP before logging in",
+        user: { email: user.email, name: user.name, isSignup: false },
+      });
+    }
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     res.json({
-    message: "Login successful",
-    user: { email: user.email, name: user.name, isSignup: true },
-    token,
-  });
+      message: "Login successful",
+      user: { 
+        email: user.email, 
+        name: user.name, 
+        isSignup: user.isSignup // <-- use the real value from DB
+      },
+      token,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Login failed" });
+  }
 };

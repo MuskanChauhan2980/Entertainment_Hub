@@ -223,7 +223,7 @@ const Events = () => {
   const handleReadMore = (event) => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user || !user.isSignup) {
-    navigate("/");
+    navigate("/signup");
   } else {
     navigate(`/events/${event.id}`);
   }
