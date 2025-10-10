@@ -1,4 +1,4 @@
- import { useState } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./signup.css";
@@ -26,13 +26,11 @@ export default function Signup() {
 
       setMessage(response.data.message);
 
-      // If backend returns user object with isSignup
       const user = response.data.user;
       if (user) {
         localStorage.setItem("user", JSON.stringify(user));
       }
 
-      // Redirect to OTP verification and pass email + optional postId
       const fromPostId = location.state?.fromPostId;
       navigate("/verify-otp", { state: { email, fromPostId } });
     } catch (error) {
@@ -78,7 +76,13 @@ export default function Signup() {
         />
         <button type="submit">Signup</button>
       </form>
+
       {message && <p>{message}</p>}
+
+      <div className="login-link">
+        Already have an account?{" "}
+        <span onClick={() => navigate("/login")}>Login here</span>
+      </div>
     </div>
   );
 }

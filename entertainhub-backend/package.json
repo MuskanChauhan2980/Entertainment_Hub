@@ -1,9 +1,9 @@
 {
   "name": "entertainhub-backend",
   "version": "1.0.0",
-   "type": "module",
+  "type": "module",
   "main": "server.js",
- "scripts": {
+  "scripts": {
     "start": "node server.js"
   },
   "author": "Muskan Chauhan",

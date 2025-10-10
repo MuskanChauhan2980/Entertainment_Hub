@@ -4,6 +4,7 @@ import nodemailer from "nodemailer";
 import twilio from "twilio";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
+import  jwt  from "jsonwebtoken";
 
 dotenv.config();
 const prisma = new PrismaClient();
@@ -114,7 +115,7 @@ export const loginDetails = async (req, res) => {
   const { email, password } = req.body;
 
   // Your logic: find user + check password
-  const user = await User.findOne({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { email } });
   if (!user) return res.status(400).json({ message: "User not found" });
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -127,9 +128,9 @@ export const loginDetails = async (req, res) => {
     { expiresIn: "1h" }
   );
 
-  res.json({
+    res.json({
     message: "Login successful",
-    user: { id: user.id, email: user.email },
+    user: { email: user.email, name: user.name, isSignup: true },
     token,
   });
 };

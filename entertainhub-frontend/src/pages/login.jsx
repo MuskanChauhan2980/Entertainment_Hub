@@ -15,17 +15,14 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      // 🔥 Send login request to backend
       const res = await axios.post("/api/login", { email, password });
 
-      // Save user & token locally
       localStorage.setItem("user", JSON.stringify(res.data.user));
       localStorage.setItem("token", res.data.token);
 
       setMessage(res.data.message || "Login successful!");
 
-      // Redirect user (if came from blog or directly to blog)
-      const redirectTo = location.state?.from || "/blog";
+      const redirectTo = location.state?.from || "/";
       navigate(redirectTo);
     } catch (err) {
       setMessage(err.response?.data?.message || "Login failed");
@@ -52,7 +49,13 @@ export default function Login() {
         />
         <button type="submit">Login</button>
       </form>
+
       {message && <p className="message">{message}</p>}
+
+      <div className="signup-link">
+        Don't have an account?{" "}
+        <span onClick={() => navigate("/signup")}>Sign up here</span>
+      </div>
     </div>
   );
 }
