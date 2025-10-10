@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { nightclubEvents } from "./nightclubEvents";
 import { beachpoolEvents } from "./beachpoolEvents";
 import { venuesData } from "./venuedata";
+import {restaurantData} from "./RestaurantsData";
+import {ladiesNight} from "./BrunchData"
 import "./Venues.css";
 
 const Venues = () => {
@@ -11,17 +13,19 @@ const Venues = () => {
     setActiveTab(tab);
   };
 
+ 
+
   // Combine all events for “All” tab
-  const allEvents = [...venuesData , ...nightclubEvents, ...beachpoolEvents];
+  const allEvents = [...venuesData, ...nightclubEvents, ...beachpoolEvents, ...restaurantData];
 
   // Mapping tab names to their event arrays
   const eventData = {
     all: allEvents,
     nightclub: nightclubEvents,
     beachpool: beachpoolEvents,
-    restaurant: [],
-    brunch: [],
-    ladiesnight: [],
+    restaurant: restaurantData,
+    brunch: beachpoolEvents,
+    ladiesnight: ladiesNight,
     afterparty: [],
     persianarabic: [],
   };
@@ -30,56 +34,26 @@ const Venues = () => {
     <div className="venues-page">
       <h1 className="venues-title">Venues & Events</h1>
 
-      {/* Top Sub-Bar */}
+      {/* Tabs Bar */}
       <ul className="venues-tabs">
-        <li
-          className={activeTab === "all" ? "active" : ""}
-          onClick={() => handleTabClick("all")}
-        >
-          <i className="fa-solid fa-bars-staggered"></i> All
-        </li>
-        <li
-          className={activeTab === "nightclub" ? "active" : ""}
-          onClick={() => handleTabClick("nightclub")}
-        >
-          <i className="fa-solid fa-music"></i> Nightclub
-        </li>
-        <li
-          className={activeTab === "beachpool" ? "active" : ""}
-          onClick={() => handleTabClick("beachpool")}
-        >
-          <i className="fa-solid fa-umbrella-beach"></i> Beach & Pool
-        </li>
-        <li
-          className={activeTab === "restaurant" ? "active" : ""}
-          onClick={() => handleTabClick("restaurant")}
-        >
-          <i className="fa-solid fa-utensils"></i> Restaurant
-        </li>
-        <li
-          className={activeTab === "brunch" ? "active" : ""}
-          onClick={() => handleTabClick("brunch")}
-        >
-          <i className="fa-solid fa-mug-hot"></i> Brunch
-        </li>
-        <li
-          className={activeTab === "ladiesnight" ? "active" : ""}
-          onClick={() => handleTabClick("ladiesnight")}
-        >
-          <i className="fa-solid fa-face-smile"></i> Ladies Night
-        </li>
-        <li
-          className={activeTab === "afterparty" ? "active" : ""}
-          onClick={() => handleTabClick("afterparty")}
-        >
-          <i className="fa-solid fa-guitar"></i> After Party
-        </li>
-        <li
-          className={activeTab === "persianarabic" ? "active" : ""}
-          onClick={() => handleTabClick("persianarabic")}
-        >
-          <i className="fa-regular fa-heart"></i> Persian & Arabic
-        </li>
+        {[
+          ["all", "fa-bars-staggered", "All"],
+          ["nightclub", "fa-music", "Nightclub"],
+          ["beachpool", "fa-umbrella-beach", "Beach & Pool"],
+          ["restaurant", "fa-utensils", "Restaurant"],
+          ["brunch", "fa-mug-hot", "Brunch"],
+          ["ladiesnight", "fa-face-smile", "Ladies Night"],
+          ["afterparty", "fa-guitar", "After Party"],
+          ["persianarabic", "fa-heart", "Persian & Arabic"],
+        ].map(([tab, icon, label]) => (
+          <li
+            key={tab}
+            className={activeTab === tab ? "active" : ""}
+            onClick={() => handleTabClick(tab)}
+          >
+            <i className={`fa-solid ${icon}`}></i> {label}
+          </li>
+        ))}
       </ul>
 
       {/* Events Section */}
@@ -87,12 +61,17 @@ const Venues = () => {
         {eventData[activeTab].length > 0 ? (
           eventData[activeTab].map((event, index) => (
             <div key={index} className="event-card">
-              <img src={event.image} alt={event.eventName} />
+              <img
+                src={event.image || event.img}
+                alt={event.eventName || event.name}
+              />
               <div className="event-info">
-                <h3>{event.eventName}</h3>
-                <p><strong>Days:</strong> {event.days}</p>
-                <p><strong>Time:</strong> {event.time}</p>
-                <p><strong>Venue:</strong> {event.venue}</p>
+                <h3>{event.eventName || event.name}</h3>
+                {event.days && <p><strong>Days:</strong> {event.days}</p>}
+                {event.time && <p><strong>Time:</strong> {event.time}</p>}
+                {event.venue && <p><strong>Venue:</strong> {event.venue}</p>}
+                {event.city && <p><strong>City:</strong> {event.city}</p>}
+                {event.desc && <p>{event.desc}</p>}
               </div>
             </div>
           ))
