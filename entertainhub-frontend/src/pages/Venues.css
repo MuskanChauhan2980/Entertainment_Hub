@@ -1,186 +1,96 @@
 .venues-page {
-  background: #0f172a;
+  padding: 30px 5%;
+  background-color: #0b0b0b;
   color: #fff;
   font-family: "Poppins", sans-serif;
-  min-height: 100vh;
-  padding: 40px 20px;
+}
+
+.venues-title {
+  font-size: 2rem;
   text-align: center;
+  margin-bottom: 20px;
+  color: #ff0055;
+  letter-spacing: 1px;
 }
 
-h2 {
-  color: #facc15;
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  color: #e2e8f0;
-  margin-bottom: 30px;
-  font-size: 1rem;
-}
-
-/* Filters */
-.venues-top-nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 25px;
-}
-
-.filter-group label {
-  color: #facc15;
-  font-weight: 500;
-  margin-right: 10px;
-}
-
-.filter-group select,
-.search-bar input {
-  background: #1e293b;
-  color: #facc15;
-  border: 1px solid #334155;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  outline: none;
-}
-
-.search-bar input::placeholder {
-  color: #facc15;
-}
-
-.filter-group select:hover,
-.filter-group select:focus,
-.search-bar input:focus {
-  border-color: #facc15;
-  box-shadow: 0 0 6px #facc15;
-}
-
-/* Category Bar */
-.venue-category-bar {
+/* Tabs (Top Bar) */
+.venues-tabs {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 30px;
-}
-
-.venue-category-bar li {
   list-style: none;
-  color: #facc15;
-  background: #1e293b;
-  padding: 8px 18px;
+  padding: 0;
+}
+
+.venues-tabs li {
+  background: #1a1a1a;
   border-radius: 30px;
+  padding: 10px 18px;
   cursor: pointer;
-  border: 1px solid transparent;
-  font-weight: 500;
-  transition: 0.3s;
+  transition: 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
 }
 
-.venue-category-bar li:hover,
-.venue-category-bar li.active {
-  background: #facc15;
-  color: #0f172a;
-  box-shadow: 0 0 12px rgba(250, 204, 21, 0.4);
+.venues-tabs li:hover {
+  background: #ff0055;
+  color: #fff;
 }
 
-/* Grid */
-.venues-grid {
+.venues-tabs li.active {
+  background: #ff0055;
+  color: #fff;
+}
+
+/* Event Grid */
+.event-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
 }
 
-/* Card */
-.venue-card {
-  background: #1e293b;
-  border-radius: 14px;
+.event-card {
+  background: #161616;
+  border-radius: 15px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  border: 2px solid transparent;
-  transition: transform 0.25s, box-shadow 0.25s;
+  transition: 0.3s ease;
+  box-shadow: 0 2px 10px rgba(255, 0, 85, 0.1);
 }
 
-.venue-card:hover {
+.event-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(250, 204, 21, 0.3);
-  border-color: #facc15;
+  box-shadow: 0 4px 20px rgba(255, 0, 85, 0.3);
 }
 
-.venue-img {
+.event-card img {
   width: 100%;
-  height: 220px;
+  height: 200px;
   object-fit: cover;
 }
 
-/* Info */
-.venue-info {
-  padding: 16px;
+.event-info {
+  padding: 15px;
 }
 
-.venue-info h3 {
-  color: #facc15;
-  font-size: 1.2rem;
+.event-info h3 {
+  font-size: 1.1rem;
   margin-bottom: 8px;
+  color: #fff;
 }
 
-.venue-info p {
+.event-info p {
   font-size: 0.9rem;
-  color: #e2e8f0;
-  line-height: 1.4;
+  margin: 4px 0;
+  color: #ccc;
 }
 
-/* Buttons */
-.venue-btns {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.venue-btns button {
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid #facc15;
-  background: transparent;
-  color: #facc15;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.venue-btns button:hover {
-  background: #facc15;
-  color: #0f172a;
-}
-
-/* Contact icons */
-.venue-btns a {
-  font-size: 1.2rem;
-  color: #facc15;
-  transition: 0.3s;
-}
-
-.venue-btns a:hover {
-  transform: scale(1.1);
-  color: #ffe45c;
-}
-
-.no-results {
-  margin-top: 40px;
-  color: #facc15;
+.no-events {
+  text-align: center;
+  color: #aaa;
   font-size: 1rem;
-}
-
-@media (max-width: 768px) {
-  .venues-top-nav {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .search-bar input,
-  .filter-group select {
-    width: 100%;
-  }
+  margin-top: 20px;
 }

@@ -37,7 +37,7 @@ function App() {
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/premiumDetails" element={<PremiumPage />} />
         <Route path="/premium" element={<SecurePayment />} />
-         <Route path="/venus" element={<Venues />} />
+         <Route path="/venues" element={<Venues />} />
       </Routes>
     </Router>
   );

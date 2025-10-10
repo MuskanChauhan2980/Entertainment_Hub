@@ -10,7 +10,7 @@ const eventsData = [
     location: "Skyline Lounge, Mumbai, Maharashtra",
     city: "Mumbai",
     state: "Maharashtra",
-    category: "restaurant",
+    category: "Concerts",
     video:
       "https://cdn.media.amplience.net/v/kerzner/roam-home-hero-video/mp4_720p",
     description:
@@ -23,7 +23,7 @@ const eventsData = [
     location: "Bluewater Beach, Goa, Goa",
     city: "Goa",
     state: "Goa",
-    category: "persian-arabic",
+    category: "specialEvents",
     image:
       "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=800&q=60",
     description:
@@ -36,7 +36,7 @@ const eventsData = [
     location: "City Arena, Delhi, Delhi",
     city: "Delhi",
     state: "Delhi",
-    category: "persian-arabic",
+    category: "musicFestivals",
     image:
       "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=60",
     description:
@@ -49,7 +49,7 @@ const eventsData = [
     location: "Downtown Plaza, Bangalore, Karnataka",
     city: "Bangalore",
     state: "Karnataka",
-    category: "restaurant",
+    category: "Concerts",
     image:
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=60",
     description:
@@ -58,7 +58,7 @@ const eventsData = [
   {
     id: 5,
     title: "Dream Dinner Show – Dream Restaurant",
-    category: "restaurant",
+    category: "DJParties",
     image:
       "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/Dream-Event.jpg?fit=700%2C338&ssl=1",
     location: "Dream Restaurant, Mumbai, Maharashtra",
@@ -80,7 +80,7 @@ const eventsData = [
   {
     id: 7,
     title: "Summer Reunion – Surf Club",
-    category: "beachclub",
+    category: "musicFestivals",
     image:
       "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/07/SummerReunion.jpg?fit=1170%2C2080&ssl=1",
     location: "Surf Club, Goa, Goa",
@@ -91,7 +91,7 @@ const eventsData = [
   {
     id: 8,
     title: "She’s With Us – Ce La Vi",
-    category: "ladiesnight",
+    category: "Concerts",
     image:
       "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/She-is-with-us-event.jpg?fit=700%2C337&ssl=1",
     location: "Ce La Vi, Bangalore, Karnataka",
@@ -102,7 +102,7 @@ const eventsData = [
   {
     id: 9,
     title: "Dream Dinner Show – The Palace Lounge",
-    category: "dinner",
+    category: "DJParties",
     image:
       "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/Dream-Event.jpg?fit=700%2C338&ssl=1",
     location: "The Palace Lounge, Mumbai, Maharashtra",
@@ -113,7 +113,7 @@ const eventsData = [
   {
     id: 10,
     title: "King Papa Fridays – Skyline Club",
-    category: "ladiesnight",
+    category: "specialEvents",
     image:
       "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/06/KingPapaDubai-EventPic.jpg?fit=1080%2C1350&ssl=1",
     location: "Skyline Club, Delhi",
@@ -124,7 +124,7 @@ const eventsData = [
   {
     id: 11,
     title: "Sky Dance Fridays – Blue Ocean Lounge",
-    category: "brunch",
+    category: "specialEvents",
     video:
       "https://linvite-production.nyc3.cdn.digitaloceanspaces.com/landing-page-site-assets/Member%20Event%20Videos/second-video.mp4",
     location: "Blue Ocean Lounge, Goa",
@@ -135,7 +135,7 @@ const eventsData = [
   {
     id: 12,
     title: "Urban Project Mondays – The Lounge House",
-    category: "afterparty",
+    category: "specialEvents",
     image:
       "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/The-Rumba-Event.jpg?fit=700%2C338&ssl=1",
     location: "The Lounge House, Bangalore, Karnataka",
@@ -146,7 +146,7 @@ const eventsData = [
   {
     id: 13,
     title: "Scandalous Thursdays – Bagatelle Club",
-    category: "nightclub",
+    category: "DJParties",
     image:
       "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/07/SCANDALOUS.jpg?fit=1080%2C1920&ssl=1",
     location: "Bagatelle Club, Mumbai, Maharashtra",
@@ -157,7 +157,7 @@ const eventsData = [
   {
     id: 14,
     title: "She’s With Us Saturdays – Ce La Vi",
-    category: "Nightclub",
+    category: "musicFestivals",
     image:
       "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2024/11/She-is-with-us-event.jpg?fit=700%2C337&ssl=1",
     location: "Ce La Vi, Bangalore, Karnataka",
@@ -168,7 +168,7 @@ const eventsData = [
   {
     id: 15,
     title: "Bora Bora Fridays – Kaimana Beach",
-    category: "afterparty",
+    category: "Concerts",
     image:
       "https://i0.wp.com/thepartyfinder.com/wp-content/uploads/2025/06/BORA-BORA-POOL-PARTY-IN-DUBAI-1.jpg?fit=1080%2C1350&ssl=1",
     location: "Kaimana Beach, Goa",
@@ -179,7 +179,7 @@ const eventsData = [
   {
     id: 16,
     title: "Summer Reunion Fridays – Surf Club",
-    category: "beachclub",
+    category: "DJParties",
     video:
       "https://linvite-production.nyc3.cdn.digitaloceanspaces.com/landing-page-site-assets/Member%20Event%20Videos/third-video.mp4",
     location: "Surf Club, Mumbai, Maharashtra",
@@ -199,14 +199,11 @@ const Events = () => {
 
   const categories = [
     { key: "all", label: "All", icon: "fa-bars-staggered" },
-    { key: "nightclub", label: "Nightclub", icon: "fa-music" },
-    { key: "beachclub", label: "Beach & Pool", icon: "fa-umbrella-beach" },
-    { key: "restaurant", label: "Restaurant", icon: "fa-utensils" },
-    { key: "brunch", label: "Brunch", icon: "fa-mug-hot" },
-    { key: "ladiesnight", label: "Ladies Night", icon: "fa-face-smile" },
-    { key: "afterparty", label: "After Party", icon: "fa-guitar" },
-    { key: "persian-arabic", label: "Persian & Arabic", icon: "fa-heart" },
-  ];
+    { key: "DJParties", label: "DJ Parties", icon: "fa-music" },
+    { key: "Concerts", label: "Concerts", icon: "fa-umbrella-beach" },
+    { key: "musicFestivals", label: "Music Festivals", icon: "fa-utensils" },
+    { key: "specialEvents", label: "Special Events", icon: "fa-mug-hot" },
+  ]
 
   const cities = ["all", "Mumbai", "Delhi", "Goa", "Bangalore"];
 
@@ -236,7 +233,7 @@ const Events = () => {
       {/* Filters */}
       <div className="events-top-nav">
         <div className="city-filter">
-          <label htmlFor="citySelect">📍 City:</label>
+          <label htmlFor="citySelect"></label>
           <select
             id="citySelect"
             value={selectedCity}
@@ -253,7 +250,7 @@ const Events = () => {
         <div className="search-bar">
           <input
             type="text"
-            placeholder="🔎 Search events..."
+            placeholder="Search events..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
