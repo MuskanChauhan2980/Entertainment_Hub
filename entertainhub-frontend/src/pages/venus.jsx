@@ -4,7 +4,8 @@ import { beachpoolEvents } from "./beachpoolEvents";
 import { venuesData } from "./venuedata";
 import {restaurantData} from "./RestaurantsData";
 import {ladiesNight} from "./BrunchData";
-import{afterParty} from"./Afterparty"
+import{afterParty} from"./Afterparty";
+import {persiamData} from "./Persian&Arabic";
 import "./Venues.css";
 
 const Venues = () => {
@@ -28,7 +29,7 @@ const Venues = () => {
     brunch: beachpoolEvents,
     ladiesnight: ladiesNight,
     afterparty: afterParty,
-    persianarabic: [],
+    persianarabic: persiamData,
   };
 
   return (
