@@ -16,6 +16,7 @@ import ModelDetails from "./pages/ModelDetails";
 import SecurePayment from "./pages/premium";
 import PremiumPage from "./pages/PremiumPage";
 import Venues from "./pages/venus";
+import ApplyGuestlist from "./pages/ApplyGuestlist";
 import "./App.css";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route path="/premiumDetails" element={<PremiumPage />} />
         <Route path="/premium" element={<SecurePayment />} />
          <Route path="/venues" element={<Venues />} />
+         <Route path="/guestList"  element={<ApplyGuestlist/>}/>
       </Routes>
     </Router>
   );
