@@ -1,7 +1,7 @@
  import React, { useState } from "react";
 import "./Articles.css";
 import { useNavigate } from "react-router-dom";
-
+import Navbar from "../components/Navbar";
 const articleData = [
   {
     id: 1,
@@ -191,6 +191,9 @@ const handleReadMore = (article) => {
   const authors = ["All", ...new Set(articleData.map((a) => a.author))];
 
   return (
+    <div className="App">
+      <Navbar showHero={false} />
+      <section className="section"> 
     <div className="articles-page">
       <header>
         <h1>Articles Hub</h1>
@@ -274,6 +277,8 @@ const handleReadMore = (article) => {
         ))}
       </section>
     </div>
+    </section>
+     </div>
     
   );
 };
