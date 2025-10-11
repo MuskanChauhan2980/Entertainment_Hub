@@ -26,3 +26,18 @@ model User {
   createdAt   DateTime @default(now())
 }
 
+
+model ContactRequest {
+  id               Int      @id @default(autoincrement())
+  fullName         String
+  email            String
+  whatsappNumber   String?
+  instagramUrl     String?
+  gender           String?
+  dateOfBirth      DateTime?
+  purpose          String?
+  message          String?
+  verifiedEmail    Boolean  @default(false)
+  createdAt        DateTime @default(now())
+}
+

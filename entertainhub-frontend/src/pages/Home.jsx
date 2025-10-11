@@ -86,7 +86,7 @@ const people = [
     category: "Chef",
   },
   {
-    img: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=800&q=60",
+    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=60",
     title: "Promoter Rhea",
     desc: "Bringing unforgettable nightlife experiences.",
     premium: true,
