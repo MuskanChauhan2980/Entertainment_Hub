@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./models.css";
 // import "../components/UpcomingEventsPreview.css";
+import Navbar from "../components/Navbar";
 
 const SliderModel = [
   {
@@ -366,6 +367,10 @@ export default function ModelsPage() {
   };
 
   return (
+
+      <div className="App">
+    <Navbar showHero={false} />
+   <section className="section"> 
     <div className="models-page">
       <h2>Models (Premium Members Only)</h2>
 
@@ -445,5 +450,8 @@ export default function ModelsPage() {
         </div>
       )}
     </div>
+
+     </section>
+      </div>
   );
 }
