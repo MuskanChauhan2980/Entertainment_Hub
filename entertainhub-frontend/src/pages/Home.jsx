@@ -410,32 +410,39 @@ function Home() {
         <div className="container">
           <h3>Join Our Community</h3>
           <div className="cta-grid">
-            <button className="cta-card">
+            <button className="cta-card" onClick={()=>navigate('/djsubmission')}>
               <span>🎵</span>
               <div>
                 <h4>DJ Party Submission</h4>
                 <p>Submit your event</p>
               </div>
             </button>
-            <button className="cta-card">
+            <button className="cta-card" onClick={()=>navigate('/VenueRegistrationForm')}>
               <span>🏢</span>
               <div>
                 <h4>Venue Registration</h4>
                 <p>List your venue</p>
               </div>
             </button>
-            <button className="cta-card">
+            <button className="cta-card" onClick={()=>navigate('/PromoterForm')}>
               <span>📢</span>
               <div>
                 <h4>Promoter Form</h4>
                 <p>Join our network</p>
               </div>
             </button>
-            <button className="cta-card">
+            <button className="cta-card" onClick={()=>navigate('/InfluencerRegistrationForm')}>
               <span>👑</span>
               <div>
                 <h4>Influencer Registration</h4>
                 <p>Collaborate with us</p>
+              </div>
+            </button>
+            <button className="cta-card" onClick={()=>navigate('/GuestlistTableBookingForm')}>
+              <span>G</span>
+              <div>
+                <h4>Guest List Registration</h4>
+                <p>Book Your seat</p>
               </div>
             </button>
           </div>

@@ -1,4 +1,4 @@
- import React, { useEffect, useState } from "react";
+ import React, {useState } from "react";
 import "./permium.css";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
