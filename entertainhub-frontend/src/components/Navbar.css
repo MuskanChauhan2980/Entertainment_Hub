@@ -1,0 +1,355 @@
+ /* ========================
+   ✅ Navbar Component Styling
+======================== */
+:root {
+  --primary: #0f172a;
+  --primary-dark: #0f172a;
+  --secondary: #f59e0b;
+  --accent: #ec4899;
+  --dark: #111827;
+  --darker: #0f172a;
+  --light: #f8fafc;
+  --gray: #6b7280;
+  --gray-light: #9ca3af;
+  --success: #10b981;
+  --border: #e5e7eb;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* ========================
+   ✅ Top Bar
+======================== */
+.top-bar {
+  background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+  color: white;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.top-bar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.top-bar .social-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.top-bar .social-icons a {
+  color: var(--gray-light);
+  font-size: 16px;
+  transition: all 0.3s ease;
+  padding: 4px;
+}
+
+.top-bar .social-icons a:hover {
+  color: var(--secondary);
+  transform: translateY(-1px);
+}
+
+.top-bar .contact-info {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.top-bar .contact-info span a {
+  color: var(--gray-light);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.top-bar .contact-info span a:hover {
+  color: white;
+}
+
+/* ========================
+   ✅ Header
+======================== */
+.main-header {
+  background: white;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--border);
+}
+
+.main-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.logo h1 {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  cursor: pointer;
+}
+
+.logo:hover h1 {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.auth-button {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* ========================
+   ✅ Dropdown Styling
+======================== */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background: none;
+  color: var(--dark);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+}
+
+.dropbtn::-webkit-details-marker {
+  display: none;
+}
+
+.dropbtn:hover {
+  background: var(--light);
+  color: var(--primary);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: white;
+  min-width: 200px;
+  box-shadow: var(--shadow-lg);
+  border-radius: 8px;
+  z-index: 1000;
+  padding: 8px 0;
+  border: 1px solid var(--border);
+  top: 100%;
+  left: 0;
+  margin-top: 5px;
+}
+
+.dropdown[open] .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: var(--dark);
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.dropdown-content a:hover {
+  background: var(--primary);
+  color: white;
+  padding-left: 20px;
+}
+
+.dropdown summary {
+  list-style: none;
+}
+
+.dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ========================
+   ✅ Hero Section
+======================== */
+.hero {
+  width: 100%;
+  background: linear-gradient(135deg, var(--darker) 0%, #1e293b 50%, var(--dark) 100%);
+  color: white;
+  padding: 100px 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-primary, .cta-secondary, .cta-premium {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.cta-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.cta-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.cta-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.cta-premium {
+  background: linear-gradient(135deg, var(--secondary) 0%, #eab308 100%);
+  color: var(--dark);
+}
+
+.cta-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.hero-gradient {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0.1;
+  z-index: 1;
+}
+
+/* ========================
+   ✅ Responsive Design
+======================== */
+@media (max-width: 768px) {
+  .top-bar .container {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .top-bar .social-icons,
+  .top-bar .contact-info {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .top-bar .contact-info {
+    gap: 15px;
+  }
+  
+  .main-header .container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .main-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .hero {
+    padding: 60px 0;
+  }
+  
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cta-primary, .cta-secondary, .cta-premium {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-nav {
+    gap: 10px;
+  }
+  
+  .auth-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .dropbtn {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  
+  .hero {
+    padding: 4px 0;
+  }
+}

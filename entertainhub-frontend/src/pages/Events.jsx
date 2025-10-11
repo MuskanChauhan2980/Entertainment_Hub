@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Events.css";
 import { useNavigate } from "react-router-dom";
-
+import Navbar from "../components/Navbar";
 const eventsData = [
   {
     id: 1,
@@ -227,6 +227,12 @@ const Events = () => {
 };
 
   return (
+
+  <div className="App">
+    <Navbar showHero={false} />
+   <section className="section">
+
+    
     <div className="events-page">
       <h2>🎉 Upcoming Events</h2>
 
@@ -318,6 +324,8 @@ const Events = () => {
           <p className="no-results">No events found.</p>
         )}
       </div>
+    </div>
+    </section>
     </div>
   );
 };
