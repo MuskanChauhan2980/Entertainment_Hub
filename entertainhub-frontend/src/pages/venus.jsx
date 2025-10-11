@@ -7,6 +7,7 @@ import {ladiesNight} from "./BrunchData";
 import{afterParty} from"./Afterparty";
 import {persiamData} from "./Persian&Arabic";
 import "./Venues.css";
+import Navbar from "../components/Navbar";
 
 const Venues = () => {
   const [activeTab, setActiveTab] = useState("all");
@@ -18,7 +19,7 @@ const Venues = () => {
  
 
   // Combine all events for “All” tab
-  const allEvents = [...venuesData, ...nightclubEvents, ...beachpoolEvents, ...restaurantData];
+  const allEvents = [...venuesData, ...restaurantData];
 
   // Mapping tab names to their event arrays
   const eventData = {
@@ -33,6 +34,11 @@ const Venues = () => {
   };
 
   return (
+
+
+     <div className="App">
+    <Navbar showHero={false} />
+   <section className="section">  
     <div className="venues-page">
       <h1 className="venues-title">Venues & Events</h1>
 
@@ -82,6 +88,8 @@ const Venues = () => {
         )}
       </div>
     </div>
+    </section>
+     </div>
   );
 };
 
