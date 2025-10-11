@@ -17,7 +17,12 @@ import SecurePayment from "./pages/premium";
 import PremiumPage from "./pages/PremiumPage";
 import Venues from "./pages/venus";
 import ApplyGuestlist from "./pages/ApplyGuestlist";
-import ContactForm  from './pages/contact'
+import ContactForm  from './pages/contact';
+import DJPartyForm from "./pages/DJPartyForm";
+import VenueRegistrationForm from "./pages/VenueRegistrationForm";
+import GuestlistTableBookingForm from "./pages/GuestlistTableBookingForm";
+import PromoterForm from "./pages/PromoterForm";
+import InfluencerRegistrationForm from "./pages/InfluencerRegistrationForm";
 import "./App.css";
 
 function App() {
@@ -42,6 +47,12 @@ function App() {
          <Route path="/venues" element={<Venues />} />
          <Route path="/guestList"  element={<ApplyGuestlist/>}/>
           <Route path="/contact"  element={<ContactForm/>}/>
+          <Route path="/djsubmission"  element={<DJPartyForm/>}/>
+ <Route path="/InfluencerRegistrationForm"  element={<InfluencerRegistrationForm/>}/> 
+ <Route path="/GuestlistTableBookingForm"  element={<GuestlistTableBookingForm/>}/> 
+ <Route path="/VenueRegistrationForm"  element={<VenueRegistrationForm/>}/> 
+ <Route path="/PromoterForm"  element={<PromoterForm/>}/>
+
       </Routes>
     </Router>
   );
