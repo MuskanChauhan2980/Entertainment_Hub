@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Forms.css";
+import Navbar from "../components/Navbar";
 
 const PromoterForm = () => {
   const [form, setForm] = useState({
@@ -76,6 +77,9 @@ const PromoterForm = () => {
   };
 
   return (
+    <div className="App">
+      <Navbar showHero={false} />
+      <section className="section"> 
     <div className="form-container">
       <div className="container">
         <div className="section-header">
@@ -239,6 +243,8 @@ const PromoterForm = () => {
           </form>
         </div>
       </div>
+    </div>
+    </section>
     </div>
   );
 };

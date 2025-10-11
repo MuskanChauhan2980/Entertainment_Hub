@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Forms.css";
-
+import Navbar from "../components/Navbar";
 const DJPartyForm = () => {
   const [form, setForm] = useState({
     djName: "",
@@ -76,6 +76,9 @@ const DJPartyForm = () => {
   };
 
   return (
+    <div className="App">
+      <Navbar showHero={false} />
+      <section className="section"> 
     <div className="form-container">
       <div className="container">
         <div className="section-header">
@@ -262,6 +265,8 @@ const DJPartyForm = () => {
         </div>
       </div>
     </div>
+     </section>
+      </div>
   );
 };
 

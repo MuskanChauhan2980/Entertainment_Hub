@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Forms.css";
-
+import Navbar from "../components/Navbar";
 const InfluencerRegistrationForm = () => {
   const [form, setForm] = useState({
     fullName: "",
@@ -80,6 +80,9 @@ const InfluencerRegistrationForm = () => {
   };
 
   return (
+     <div className="App">
+      <Navbar showHero={false} />
+      <section className="section"> 
     <div className="form-container">
       <div className="container">
         <div className="section-header">
@@ -290,6 +293,8 @@ const InfluencerRegistrationForm = () => {
           </form>
         </div>
       </div>
+    </div>
+    </section>
     </div>
   );
 };

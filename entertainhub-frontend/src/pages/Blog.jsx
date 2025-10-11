@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import Navbar from "../components/Navbar";
 import "./Blog.css";
 
 const featuredPosts = [
@@ -256,6 +256,9 @@ const Blog = () => {
   const currentPost = featuredPosts[current];
 
  return (
+  <div className="App">
+      <Navbar showHero={false} />
+      <section className="section"> 
     <div className="blog-page">
       <header>
         <h1>Entertainment Hub Blog</h1>
@@ -356,6 +359,8 @@ const Blog = () => {
           </div>
         </div>
       )}
+    </div>
+    </section>
     </div>
   );
 };

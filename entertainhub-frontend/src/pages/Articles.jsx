@@ -170,7 +170,7 @@ const Articles = () => {
 const handleReadMore = (article) => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user || !user.isSignup) {
-    navigate("/");
+    navigate("/signup");
   } else {
     navigate(`/articles/${article.id}`);
   }
