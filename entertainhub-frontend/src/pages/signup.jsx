@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./signup.css";
+import Navbar from "../components/Navbar";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -43,6 +44,9 @@ export default function Signup() {
   };
 
   return (
+     <div className="App">
+      <Navbar showHero={false} />
+      <section className="section"> 
     <div className="signup-container">
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
@@ -84,5 +88,7 @@ export default function Signup() {
         <span onClick={() => navigate("/login")}>Login here</span>
       </div>
     </div>
+    </section>
+     </div>
   );
 }

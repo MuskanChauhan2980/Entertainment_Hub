@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./login.css";
+import Navbar from "../components/Navbar";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -30,6 +31,9 @@ export default function Login() {
   };
 
   return (
+     <div className="App">
+      <Navbar showHero={false} />
+      <section className="section"> 
     <div className="login-container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
@@ -57,5 +61,7 @@ export default function Login() {
         <span onClick={() => navigate("/signup")}>Sign up here</span>
       </div>
     </div>
+    </section>
+   </div>
   );
 }

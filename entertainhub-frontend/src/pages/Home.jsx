@@ -196,12 +196,17 @@ function Home() {
     ) {
       navigate("/models");
     } else if (
-      item.type === "Restaurant" ||
+      item.type==="Beach Clubs"||
       item.type === "Night Club" ||
       item.type === "Lounge"
     ) {
       navigate("/venues");
-    } else {
+    } 
+    else if(item.type === "Restaurant")
+      {
+         navigate("/restaurants");
+    }
+    else {
       navigate("/event");
     }
   };
@@ -283,11 +288,11 @@ function Home() {
               </summary>
               <div className="dropdown-content">
                 <a href="/restaurants">Restaurants</a>
-                <a href="/">Beach Clubs</a>
-                <a href="/event">Night Clubs</a>
-                <a href="/event">Lounges</a>
-                <a href="/event">Pools</a>
-                <a href="/event">Private Clubs</a>
+                <a href="/venues">Beach Clubs</a>
+                <a href="/venues">Night Clubs</a>
+                <a href="/venues">Lounges</a>
+                <a href="/venues">Pools</a>
+                <a href="/venues">Private Clubs</a>
               </div>
             </details>
 
@@ -310,11 +315,11 @@ function Home() {
                 People ▾
               </summary>
               <div className="dropdown-content">
-                <a href="/featuredPeople">DJs</a>
-                <a href="/featuredPeople">Chefs</a>
-                <a href="/featuredPeople">Promoters</a>
-                <a href="/featuredPeople">Influencers</a>
-                <a href="/model">Models</a>
+                <a href="/models">DJs</a>
+                <a href="/models">Chefs</a>
+                <a href="/models">Promoters</a>
+                <a href="/models">Influencers</a>
+                <a href="/models">Models</a>
               </div>
             </details>
           </nav>

@@ -99,11 +99,11 @@ const Navbar = ({ showHero = false }) => {
               </summary>
               <div className="dropdown-content">
                 <a href="/restaurants">Restaurants</a>
-                <a href="/">Beach Clubs</a>
-                <a href="/event">Night Clubs</a>
-                <a href="/event">Lounges</a>
-                <a href="/event">Pools</a>
-                <a href="/event">Private Clubs</a>
+                <a href="/venues">Beach Clubs</a>
+                <a href="/venues">Night Clubs</a>
+                <a href="/venues">Lounges</a>
+                <a href="/venues">Pools</a>
+                <a href="/venues">Private Clubs</a>
               </div>
             </details>
 
@@ -112,7 +112,7 @@ const Navbar = ({ showHero = false }) => {
                 <FaCalendarAlt />
                 Events ▾
               </summary>
-              <div className="dropdown-content">
+               <div className="dropdown-content">
                 <a href="/event">DJ Parties</a>
                 <a href="/event">Concerts</a>
                 <a href="/event">Music Festivals</a>
@@ -126,11 +126,13 @@ const Navbar = ({ showHero = false }) => {
                 People ▾
               </summary>
               <div className="dropdown-content">
-                <a href="/featuredPeople">DJs</a>
-                <a href="/featuredPeople">Chefs</a>
-                <a href="/featuredPeople">Promoters</a>
-                <a href="/featuredPeople">Influencers</a>
-                <a href="/model">Models</a>
+               
+                <a href="/models">DJs</a>
+                <a href="/models">Chefs</a>
+                <a href="/models">Promoters</a>
+                <a href="/models">Influencers</a>
+                <a href="/models">Models</a>
+              
               </div>
             </details>
 

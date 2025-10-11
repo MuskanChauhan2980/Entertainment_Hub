@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Restaurants.css";
+import Navbar from "../components/Navbar";
 
 const restaurantData = [
   {
@@ -133,6 +134,9 @@ const Restaurants = () => {
   };
 
   return (
+     <div className="App">
+      <Navbar showHero={false} />
+      <section className="section"> 
     <div className="restaurants-page">
       <header>
         <h1>Restaurants</h1>
@@ -207,6 +211,8 @@ const Restaurants = () => {
           </div>
         </div>
       )}
+    </div>
+    </section>
     </div>
   );
 };
