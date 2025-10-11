@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./models.css";
-import "../components/UpcomingEventsPreview.css";
+// import "../components/UpcomingEventsPreview.css";
 
 const SliderModel = [
   {
@@ -322,97 +322,128 @@ const models = [
   },
 ];
 
-// Group models dynamically based on number per slide
-const groupModels = (arr, size) => {
-  const groups = [];
-  for (let i = 0; i < arr.length; i += size) {
-    groups.push(arr.slice(i, i + size));
-  }
-  return groups;
-};
+// // Group models dynamically based on number per slide
+// const groupModels = (arr, size) => {
+//   const groups = [];
+//   for (let i = 0; i < arr.length; i += size) {
+//     groups.push(arr.slice(i, i + size));
+//   }
+//   return groups;
+// };
 
 export default function ModelsPage() {
   const navigate = useNavigate();
+  const [filters, setFilters] = useState({
+    nationality: "",
+    age: "",
+    skin_color: "",
+    relationship_status: "",
+    eating_habits: "",
+  });
+  const [showPopup, setShowPopup] = useState(false);
 
-  const handleDetails = (modal) => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user || !user.isSignup) {
-      navigate("/");
-    } else {
-      navigate(`/models/${modal.id}`);
-    }
-  };
+  const user = JSON.parse(localStorage.getItem("user")) || {};
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
-        });
-      },
-      { threshold: 0.2 }
+  // ---- Filter logic ----
+  const filteredModels = models.filter((m) => {
+    return (
+      (filters.nationality ? m.nationality === filters.nationality : true) &&
+      (filters.age ? m.age.toString() === filters.age : true) &&
+      (filters.skin_color ? m.skin_color === filters.skin_color : true) &&
+      (filters.relationship_status
+        ? m.relationship_status === filters.relationship_status
+        : true) &&
+      (filters.eating_habits ? m.eating_habits === filters.eating_habits : true)
     );
+  });
 
-    document
-      .querySelectorAll(".scroll-animation")
-      .forEach((el) => observer.observe(el));
-
-    return () =>
-      document
-        .querySelectorAll(".scroll-animation")
-        .forEach((el) => observer.unobserve(el));
-  }, []);
-
-  // Determine slides per view for grouping
-  const slidesPerGroup = window.innerWidth < 768 ? 1 : 2;
-  const groupedModels = groupModels(SliderModel, slidesPerGroup);
+  const handleDetails = (model) => {
+    if (!user || !user.isPremium) {
+      setShowPopup(true);
+      return;
+    }
+    navigate(`/models/${model.id}`);
+  };
 
   return (
     <div className="models-page">
-      <h2>Featured Models</h2>
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        navigation
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 2500, disableOnInteraction: false }}
-        loop={true}
-        slidesPerView={1}
-      >
-        {groupedModels.map((group, idx) => (
-          <SwiperSlide key={idx}>
-            <div className="model-slide-group">
-              {group.map((model, i) => (
-                <div
-                  className={`model-slide staggered`}
-                  key={model.id}
-                  style={{ transitionDelay: `${i * 0.2}s` }}
-                >
-                  <img src={model.img} alt={model.name} />
-                  <h3>
-                    {model.name}{" "}
-                    {model.premium && (
-                      <span className="premium-badge">Premium</span>
-                    )}
-                  </h3>
-                </div>
-              ))}
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <h2>Models (Premium Members Only)</h2>
 
+      {/* -------- Filter Section -------- */}
+      <div className="filter-bar">
+        <select
+          onChange={(e) => setFilters({ ...filters, nationality: e.target.value })}
+        >
+          <option value="">All Nationalities</option>
+          {[...new Set(models.map((m) => m.nationality))].map((n) => (
+            <option key={n}>{n}</option>
+          ))}
+        </select>
+
+        <select onChange={(e) => setFilters({ ...filters, age: e.target.value })}>
+          <option value="">All Ages</option>
+          {[...new Set(models.map((m) => m.age))].map((age) => (
+            <option key={age}>{age}</option>
+          ))}
+        </select>
+
+        <select
+          onChange={(e) => setFilters({ ...filters, skin_color: e.target.value })}
+        >
+          <option value="">All Skin Colors</option>
+          {[...new Set(models.map((m) => m.skin_color))].map((color) => (
+            <option key={color}>{color}</option>
+          ))}
+        </select>
+
+        <select
+          onChange={(e) =>
+            setFilters({ ...filters, relationship_status: e.target.value })
+          }
+        >
+          <option value="">All Relationship Status</option>
+          {[...new Set(models.map((m) => m.relationship_status))].map((status) => (
+            <option key={status}>{status}</option>
+          ))}
+        </select>
+
+        <select
+          onChange={(e) =>
+            setFilters({ ...filters, eating_habits: e.target.value })
+          }
+        >
+          <option value="">All Eating Habits</option>
+          {[...new Set(models.map((m) => m.eating_habits))].map((food) => (
+            <option key={food}>{food}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* -------- Model Grid -------- */}
       <div className="models-grid">
-        {models.map((model) => (
-          <div className="model-card scroll-animation" key={model.id}>
+        {filteredModels.map((model) => (
+          <div className="model-card" key={model.id}>
             <img src={model.img} alt={model.name} />
-            <h3>
-              {model.name}{" "}
-              {model.premium && <span className="premium-badge">Premium</span>}
-            </h3>
-            <button className="view-calendar-btn" onClick={()=>handleDetails(model)}>Details</button>
+            <h3>{model.name}</h3>
+            <p>Nationality: {model.nationality}</p>
+            <p>Age: {model.age}</p>
+            <p>Height: {model.height_cm} cm</p>
+            <p>Weight: {model.weight_kg} kg</p>
+            <p>Skin: {model.skin_color}</p>
+            <button onClick={() => handleDetails(model)}>View Details</button>
           </div>
         ))}
       </div>
+
+      {/* -------- Popup for Non-Premium Users -------- */}
+      {showPopup && (
+        <div className="popup-overlay" onClick={() => setShowPopup(false)}>
+          <div className="popup-box" onClick={(e) => e.stopPropagation()}>
+            <h3>Sorry, only for premium members.</h3>
+            <button onClick={() => setShowPopup(false)}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
