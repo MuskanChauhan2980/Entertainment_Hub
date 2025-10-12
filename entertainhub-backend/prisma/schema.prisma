@@ -151,4 +151,29 @@ model VenueRegistration {
 
   @@map("venue_registrations")
 }
- 
+
+
+// ADD THIS NEW MODEL to your existing schema.prisma file
+
+model InfluencerApplication {
+  id                      Int       @id @default(autoincrement())
+  fullName                String
+  email                   String    @unique 
+  phone                   String
+  instagram               String
+  followers               String
+  engagementRate          String?
+  niche                   String?
+  contentType             String?   @db.Text
+  collaborationInterest   String?   @db.Text
+  pastCollaborations      String?   @db.Text
+  rateExpectation         String?
+  agreeToTerms            Boolean
+  
+  isEmailVerified         Boolean   @default(false)
+  status                  String    @default("PENDING")
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  @@map("influencer_applications")
+}

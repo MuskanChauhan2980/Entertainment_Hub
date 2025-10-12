@@ -3,7 +3,7 @@ import "./Forms.css";
 import Navbar from "../components/Navbar";
 
 import axios from "axios";
-const API_BASE_URL = "http://localhost:5000/api/contact"; // **CONFIRM YOUR BACKEND URL**
+const API_BASE_URL = "http://localhost:5000/api/influencerRegistrationForm"; // **CONFIRM YOUR BACKEND URL**
 
 
 const InfluencerRegistrationForm = () => {
@@ -37,6 +37,14 @@ const InfluencerRegistrationForm = () => {
     });
     const [captchaError, setCaptchaError] = useState('');
 
+
+      // New state for OTP flow
+  const [otp, setOtp] = useState("");
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [otpError, setOtpError] = useState("");
+
+
     // --- CAPTCHA FETCH LOGIC ---
   const fetchCaptcha = async () => {
     try {
@@ -65,6 +73,12 @@ const InfluencerRegistrationForm = () => {
     setCaptcha({ ...captcha, input: e.target.value });
     if (captchaError) setCaptchaError('');
   }; 
+
+    // Handler for OTP input
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
+    if (otpError) setOtpError("");
+  };
 
   // Helper to render CAPTCHA (UPDATED JSX)
   const renderCaptcha = () => {
@@ -105,7 +119,11 @@ const InfluencerRegistrationForm = () => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     
-    if (type === 'checkbox') {
+    if (name === 'agreeToTerms') {
+        // Set the value directly to the boolean state of the checkbox
+        setForm({ ...form, [name]: checked }); 
+    } 
+   else if (type === 'checkbox') {
       const currentValues = form[name] || [];
       if (checked) {
         setForm({ ...form, [name]: [...currentValues, value] });
@@ -118,6 +136,66 @@ const InfluencerRegistrationForm = () => {
     
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
+    }
+  };
+
+
+  const handleSendOtp = async () => {
+    // Quick validation for required fields
+    const emailOnlyErrors = {};
+    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email))
+      emailOnlyErrors.email = "Email must be valid to send OTP";
+    if (Object.keys(emailOnlyErrors).length > 0) {
+      setErrors((prev) => ({ ...prev, ...emailOnlyErrors }));
+      return;
+    }
+
+    setIsSubmitting(true);
+    setOtpError("");
+    try {
+      const response = await axios.post(`${API_BASE_URL}/send-otp`, {
+        email: form.email,
+      });
+      if (response.data.success) {
+        setIsOtpSent(true);
+        alert("OTP sent to your email. Please check your inbox.");
+      } else {
+        setOtpError(response.data.message || "Failed to send OTP.");
+      }
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      setOtpError("A network error occurred while sending OTP. Try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (!otp) {
+      setOtpError("Please enter the OTP.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setOtpError("");
+    try {
+      const response = await axios.post(`${API_BASE_URL}/verify-otp`, {
+        email: form.email,
+        otp: otp,
+      });
+
+      if (response.data.success) {
+        setIsEmailVerified(true);
+        setOtpError("");
+        alert("Email verified successfully!");
+      } else {
+        setOtpError(response.data.message || "Invalid or expired OTP.");
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      setOtpError("Verification failed. Check the OTP or try resending.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -139,7 +217,19 @@ const InfluencerRegistrationForm = () => {
     if (!validateForm()) return;
     
     setIsSubmitting(true);
+     const submissionData = {
+      ...form,
+      userCaptchaAnswer: captcha.input, // User's CAPTCHA input
+      captchaId: captcha.id, // The unique ID for backend verification
+    };
+
     try {
+       const response = await axios.post(
+        `${API_BASE_URL}/submit`,
+        submissionData
+      );
+
+      if (response.data.success) {
       console.log('Influencer Form submitted:', form);
       alert("Influencer registration submitted! We'll review your profile.");
       setForm({
@@ -148,13 +238,76 @@ const InfluencerRegistrationForm = () => {
         engagementRate: "", niche: "", contentType: [], collaborationInterest: [],
         pastCollaborations: "", rateExpectation: "", agreeToTerms: false
       });
+       setOtp("");
+        setIsEmailVerified(false);
+        setIsOtpSent(false);
+        setErrors({});
+        setOtpError("");
+        fetchCaptcha();
+      }
     } catch (error) {
-      alert("Error submitting form. Please try again.");
-      console.log(error);
+      const errorMessage =
+        error.response?.data?.message ||
+        "A network error occurred. Failed to submit the form.";
+
+      // Handle backend CAPTCHA validation error explicitly
+      if (
+        errorMessage.includes("CAPTCHA") ||
+        errorMessage.includes("Invalid")
+      ) {
+        setCaptchaError(errorMessage);
+        fetchCaptcha(); // Load a new CAPTCHA on validation failure
+      }
+
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+
+  const renderEmailVerification = () => {
+    if (isEmailVerified) {
+      return <p className="success-message">✅ Email Verified. You can now submit the form.</p>;
+    }
+    
+    if (!isOtpSent) {
+      return (
+        <div className="otp-action">
+          <button type="button" onClick={handleSendOtp} disabled={isSubmitting || errors.email || !form.email}>
+            {isSubmitting ? 'Sending...' : 'Send Verification OTP'}
+          </button>
+          {errors.email && <span className="field-error">{errors.email}</span>}
+        </div>
+      );
+    }
+    
+    return (
+      <div className="otp-verification-group">
+        <div className="form-group">
+          <label>
+            Enter OTP
+            <input
+              type="text"
+              name="otp"
+              value={otp}
+              onChange={handleOtpChange}
+              placeholder="6-digit code"
+              maxLength="6"
+            />
+            {otpError && <span className="field-error">{otpError}</span>}
+          </label>
+        </div>
+        <button type="button" onClick={handleVerifyOtp} disabled={isSubmitting || !otp}>
+          {isSubmitting ? 'Verifying...' : 'Verify OTP'}
+        </button>
+        <button type="button" onClick={handleSendOtp} disabled={isSubmitting} className="resend-btn">
+          Resend OTP
+        </button>
+      </div>
+    );
+  };
+
 
   return (
      <div className="App">
@@ -197,6 +350,7 @@ const InfluencerRegistrationForm = () => {
                       className={errors.email ? 'error' : ''} />
                     {errors.email && <span className="field-error">{errors.email}</span>}
                   </label>
+                  {renderEmailVerification()}
                 </div>
                 <div className="form-group">
                   <label>
