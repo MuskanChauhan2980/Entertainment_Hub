@@ -123,4 +123,32 @@ model DJApplication {
   @@map("dj_applications")
 }
 
+
+// ADD THIS NEW MODEL to your existing schema.prisma file
+
+model VenueRegistration {
+  id                    Int       @id @default(autoincrement())
+  venueName             String
+  venueType             String
+  contactPerson         String
+  email                 String    @unique
+  phone                 String
+  whatsapp              String?
+  address               String    @db.Text
+  capacity              String?
+  operatingHours        String?
+  musicGenre            String?   @db.Text // Stored as a comma-separated string
+  amenities             String?   @db.Text  // Stored as a comma-separated string
+  website               String?
+  instagram             String?
+  description           String?   @db.Text
+  partnershipInterest   String?
+
+  // Internal Fields
+  status                String    @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("venue_registrations")
+}
  
