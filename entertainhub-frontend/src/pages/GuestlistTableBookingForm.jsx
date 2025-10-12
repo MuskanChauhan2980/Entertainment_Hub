@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import "./Forms.css";
+import "./forms.css";
 import axios from 'axios'; 
 import Navbar from "../components/Navbar";
 const API_BASE_URL = "http://localhost:5000/api/bookingForm";

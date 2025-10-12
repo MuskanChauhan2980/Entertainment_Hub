@@ -1,5 +1,5 @@
 import React, { useState ,useEffect } from "react";
-import "./Forms.css";
+import "./forms.css";
 import Navbar from "../components/Navbar";
 
 import axios from 'axios'; // Import axios for API calls
