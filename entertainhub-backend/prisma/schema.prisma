@@ -69,3 +69,27 @@ model PromoterApplication {
   
   @@map("promoter_applications")
 }
+
+// ADD THIS NEW MODEL to your existing schema.prisma file
+
+model BookingRequest {
+  id                    Int       @id @default(autoincrement())
+  bookingType           String    // "guestlist" or "table"
+  fullName              String
+  email                 String
+  phone                 String
+  whatsapp              String?
+  instagram             String?
+  eventType             String?
+  preferredVenue        String?
+  date                  DateTime
+  guestCount            String
+  tableType             String?
+  budget                String?
+  specialRequests       String?   @db.Text
+
+  status                String    @default("PENDING") // PENDING, CONFIRMED, CANCELLED
+  createdAt             DateTime  @default(now())
+
+  @@map("booking_requests")
+}

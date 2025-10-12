@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/user.routes.js"; // ✅ ESM import
 import contactRoutes from "./routes/contactRoutes.js";
 import submitPromoterForm  from "./routes/fromRouters.js";
+import submitBookingForm  from "./routes/bookingRoutes.js";
 dotenv.config();
 
 const prisma = new PrismaClient();
@@ -30,7 +31,8 @@ app.use(express.urlencoded({ extended: false }));
 // Use routes
 app.use("/api", userRouter);
 app.use("/api/contact", contactRoutes);
-app.use('/api/promoterFrom',submitPromoterForm)
+app.use('/api/promoterFrom',submitPromoterForm);
+app.use('/api/bookingForm',submitBookingForm);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
