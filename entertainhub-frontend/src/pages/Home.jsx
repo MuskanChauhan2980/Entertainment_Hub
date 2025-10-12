@@ -368,7 +368,7 @@ function Home() {
               </button> */}
 
               {!isPremium && (
-                <button onClick={() => navigate("/premium")}>
+                <button className="cta-premium" onClick={() => navigate("/premiumDetails")}>
                   Go Premium 🌟
                 </button>
               )}

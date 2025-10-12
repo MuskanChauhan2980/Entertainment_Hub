@@ -140,8 +140,8 @@ const Navbar = ({ showHero = false }) => {
 
             <div>
                {!isPremium && (
-                               <button onClick={() => navigate("/premium")}>
-                                 Go Premium 🌟
+                               <button className="cta-premium" onClick={() => navigate("/premiumDetails")}>
+                                 Go Premium 
                                </button>
                              )}
                              {isPremium && <button><FaCrown /></button>}
