@@ -358,8 +358,10 @@ export default function ModelsPage() {
     );
   });
 
+
+   const isPremium = localStorage.getItem("isPremium") === "true";
   const handleDetails = (model) => {
-    if (!user || !user.isPremium) {
+    if (!user ||!isPremium) {
       setShowPopup(true);
       return;
     }

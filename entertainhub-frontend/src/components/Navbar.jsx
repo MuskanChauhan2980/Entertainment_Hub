@@ -19,6 +19,8 @@ import "./Navbar.css";
 const Navbar = ({ showHero = false }) => {
   const navigate = useNavigate();
 
+   const isPremium = localStorage.getItem("isPremium") === "true";
+
   return (
     <>
       {/* Top Bar */}
@@ -137,13 +139,12 @@ const Navbar = ({ showHero = false }) => {
             </details>
 
             <div>
-                 <button
-              className="cta-premium"
-              onClick={() => navigate("/premiumDetails")}
-            >
-              <FaCrown />
-              Go Premium
-            </button>
+               {!isPremium && (
+                               <button onClick={() => navigate("/premium")}>
+                                 Go Premium 🌟
+                               </button>
+                             )}
+                             {isPremium && <button><FaCrown /></button>}
             </div>
           </nav>
         </div>

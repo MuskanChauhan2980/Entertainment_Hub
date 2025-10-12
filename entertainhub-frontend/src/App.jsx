@@ -13,7 +13,6 @@ import ModelsPage from "./pages/ModelsPage";
 import VerifyOTP from "./pages/verifyOTP";
 import CalendarPage from "./pages/CalendarPage";
 import ModelDetails from "./pages/ModelDetails";
-import SecurePayment from "./pages/premium";
 import PremiumPage from "./pages/PremiumPage";
 import Venues from "./pages/venus";
 import ApplyGuestlist from "./pages/ApplyGuestlist";
@@ -45,7 +44,6 @@ function App() {
         <Route path="/models/:id" element={<ModelDetails />} />
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/premiumDetails" element={<PremiumPage />} />
-        <Route path="/premium" element={<SecurePayment />} />
         <Route path="/venues" element={<Venues />} />
         <Route path="/guestList" element={<ApplyGuestlist />} />
         <Route path="/contact" element={<ContactForm />} />

@@ -74,10 +74,16 @@ const features = [
 export default function PremiumPage() {
   const navigate = useNavigate();
 
-  const handleSubscribe = (plan) => {
-    alert(`Proceed to payment for ${plan.title} - ${plan.discountedPrice}`);
-    // Here you would integrate with your payment processor
-  };
+ const handleSubscribe = (plan) => {
+  alert(`Proceed to payment for ${plan.title} - ${plan.discountedPrice}`);
+
+  // Mark user as premium in localStorage
+  localStorage.setItem("isPremium", "true");
+
+  // Optional: you can save the selected plan as well
+  localStorage.setItem("premiumPlan", plan.title);
+};
+
 
   return (
     <div className="premium-page">

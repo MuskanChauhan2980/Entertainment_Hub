@@ -196,20 +196,19 @@ function Home() {
     ) {
       navigate("/models");
     } else if (
-      item.type==="Beach Clubs"||
+      item.type === "Beach Clubs" ||
       item.type === "Night Club" ||
       item.type === "Lounge"
     ) {
       navigate("/venues");
-    } 
-    else if(item.type === "Restaurant")
-      {
-         navigate("/restaurants");
-    }
-    else {
+    } else if (item.type === "Restaurant") {
+      navigate("/restaurants");
+    } else {
       navigate("/event");
     }
   };
+
+  const isPremium = localStorage.getItem("isPremium") === "true";
 
   return (
     <div className="App">
@@ -360,13 +359,20 @@ function Home() {
               >
                 Discover Venues
               </button>
-              <button
+              {/* <button
                 className="cta-premium"
                 onClick={() => navigate("/premiumDetails")}
               >
                 <FaCrown />
                 Go Premium
-              </button>
+              </button> */}
+
+              {!isPremium && (
+                <button onClick={() => navigate("/premium")}>
+                  Go Premium 🌟
+                </button>
+              )}
+              {isPremium && <button><FaCrown /></button>}
             </div>
           </div>
         </div>
@@ -415,35 +421,50 @@ function Home() {
         <div className="container">
           <h3>Join Our Community</h3>
           <div className="cta-grid">
-            <button className="cta-card" onClick={()=>navigate('/djsubmission')}>
+            <button
+              className="cta-card"
+              onClick={() => navigate("/djsubmission")}
+            >
               <span>🎵</span>
               <div>
                 <h4>DJ Party Submission</h4>
                 <p>Submit your event</p>
               </div>
             </button>
-            <button className="cta-card" onClick={()=>navigate('/VenueRegistrationForm')}>
+            <button
+              className="cta-card"
+              onClick={() => navigate("/VenueRegistrationForm")}
+            >
               <span>🏢</span>
               <div>
                 <h4>Venue Registration</h4>
                 <p>List your venue</p>
               </div>
             </button>
-            <button className="cta-card" onClick={()=>navigate('/PromoterForm')}>
+            <button
+              className="cta-card"
+              onClick={() => navigate("/PromoterForm")}
+            >
               <span>📢</span>
               <div>
                 <h4>Promoter Form</h4>
                 <p>Join our network</p>
               </div>
             </button>
-            <button className="cta-card" onClick={()=>navigate('/InfluencerRegistrationForm')}>
+            <button
+              className="cta-card"
+              onClick={() => navigate("/InfluencerRegistrationForm")}
+            >
               <span>👑</span>
               <div>
                 <h4>Influencer Registration</h4>
                 <p>Collaborate with us</p>
               </div>
             </button>
-            <button className="cta-card" onClick={()=>navigate('/GuestlistTableBookingForm')}>
+            <button
+              className="cta-card"
+              onClick={() => navigate("/GuestlistTableBookingForm")}
+            >
               <span>G</span>
               <div>
                 <h4>Guest List Registration</h4>
