@@ -1,10 +1,34 @@
- import { PrismaClient } from "@prisma/client";
-
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
- 
+
+// Submit promoter application (already implemented)
 export const submitPromoterForm = async (req, res) => {
-    // Destructure all expected fields, including CAPTCHA verification data
-    const {
+  const {
+    fullName,
+    email,
+    phone,
+    whatsapp,
+    instagram,
+    experience,
+    networkSize,
+    preferredVenues,
+    marketingSkills,
+    availability,
+    commissionExpectation,
+    references,
+  } = req.body;
+
+  if (!fullName || !email || !phone || !experience) {
+    return res.status(400).json({ success: false, message: "Missing required fields." });
+  }
+
+  const marketingSkillsString = Array.isArray(marketingSkills) 
+    ? marketingSkills.join(', ') 
+    : (marketingSkills || '');
+
+  try {
+    const application = await prisma.bookingRequest.create({
+      data: {
         fullName,
         email,
         phone,
@@ -13,56 +37,75 @@ export const submitPromoterForm = async (req, res) => {
         experience,
         networkSize,
         preferredVenues,
-        marketingSkills, // This is an array from the frontend
+        marketingSkills: marketingSkillsString,
         availability,
         commissionExpectation,
         references,
-    } = req.body;
+        status: "PENDING", // default status
+      },
+    });
 
-    // 1. Client-Side Required Field Validation Check (Basic)
-    if (!fullName || !email || !phone || !experience  ) {
-        return res.status(400).json({ success: false, message: "Missing required fields." });
+    res.status(201).json({ success: true, message: "Promoter application submitted!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+};
+
+// Admin: Get all promoter applications
+// export const getAllPromoters = async (req, res) => {
+//   try {
+//     const applications = await prisma.bookingRequest.findMany({
+//         where:{
+//             guestCount:{} //more then 20
+//         },
+//       orderBy: { createdAt: "desc" },
+//     });
+//     res.json({ success: true, data: applications });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ success: false, message: "Failed to fetch applications" });
+//   }
+// };
+
+export const getAllPromoters = async (req, res) => {
+  try {
+    const applications = await prisma.bookingRequest.findMany({
+      where: {
+        OR: [
+          { guestCount: "20+" },
+        ],
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    res.json({ success: true, data: applications });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Failed to fetch applications" });
+  }
+};
+
+
+
+// Admin: Update promoter status (Approve/Reject)
+export const updatePromoterStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!["APPROVED", "REJECTED"].includes(status)) {
+      return res.status(400).json({ success: false, message: "Invalid status" });
     }
-    
-   
-    // 3. Data Transformation for Prisma/MySQL
-    // Convert array of marketingSkills to a comma-separated string
-    const marketingSkillsString = Array.isArray(marketingSkills) 
-        ? marketingSkills.join(', ') 
-        : (marketingSkills || ''); // handle if it's already a string or null/undefined
 
-    // 4. Database Submission
-    try {
-        const application = await prisma.promoterApplication.create({
-            data: {
-                fullName,
-                email,
-                phone,
-                whatsapp,
-                instagram,
-                experience,
-                networkSize,
-                preferredVenues,
-                marketingSkills: marketingSkillsString, // Use the stringified version
-                availability,
-                commissionExpectation,
-                references,
-                // status defaults to "PENDING"
-            },
-        });
+    const updated = await prisma.bookingRequest.update({
+      where: { id: parseInt(id) },
+      data: { status },
+    });
 
-        console.log("New Promoter Application Saved:", application.id);
-
-        res.status(201).json({ 
-            success: true, 
-            message: "Promoter application submitted! We will review your profile soon."
-        });
-
-    } catch (error) {
-        console.error("Error saving promoter application:", error);
-        res.status(500).json({ 
-            success: false, 
-            message: "An unexpected server error occurred during submission." 
-        });
-    }  
+    res.json({ success: true, message: "Status updated", data: updated });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Failed to update status" });
+  }
 };

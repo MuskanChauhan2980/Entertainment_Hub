@@ -25,6 +25,7 @@ import PromoterForm from "./pages/PromoterForm";
 import InfluencerRegistrationForm from "./pages/InfluencerRegistrationForm";
 import AdminDashboard  from "./pages/AdminDashboard"
 import "./App.css";
+import AdminPromoter  from './pages/AdminGuestlist'
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
         />
         <Route path="/PromoterForm" element={<PromoterForm />} />
          <Route path="/admin" element={<AdminDashboard />} />
+         <Route path="/adminPromoter" element={<AdminPromoter />} />
       </Routes>
     </Router>
   );
