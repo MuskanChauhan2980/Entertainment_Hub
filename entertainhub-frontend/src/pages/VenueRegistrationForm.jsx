@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Forms.css";
 import Navbar from "../components/Navbar";
+import axios from "axios";
+
+const API_BASE_URL = "http://localhost:5000/api/contact";
 
 const VenueRegistrationForm = () => {
   const [form, setForm] = useState({
@@ -24,6 +27,44 @@ const VenueRegistrationForm = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // UPDATED: State for secure CAPTCHA logic
+  const [captcha, setCaptcha] = useState({
+    code: "", // The visual code (now dynamic)
+    id: null, // The unique ID for backend verification
+    input: "", // The user's typed answer
+  });
+  const [captchaError, setCaptchaError] = useState("");
+
+  // --- CAPTCHA FETCH LOGIC ---
+  const fetchCaptcha = async () => {
+    try {
+      // Endpoint to fetch the dynamic CAPTCHA code and ID
+      const response = await axios.get(`${API_BASE_URL}/captcha`);
+      setCaptcha({
+        code: response.data.codeToDisplay,
+        id: response.data.captchaId,
+        input: "", // Clear previous input
+      });
+      setCaptchaError("");
+    } catch (error) {
+      console.error("Failed to fetch CAPTCHA:", error);
+      setCaptchaError("Failed to load security code.");
+      // Fallback: If backend is down, use a placeholder but alert user
+      setCaptcha({ code: "ERROR", id: "0", input: "" });
+    }
+  };
+
+  // Fetch CAPTCHA on component mount
+  useEffect(() => {
+    fetchCaptcha();
+  }, []);
+
+  // Handler for CAPTCHA input
+  const handleCaptchaChange = (e) => {
+    setCaptcha({ ...captcha, input: e.target.value });
+    if (captchaError) setCaptchaError("");
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -101,6 +142,44 @@ const VenueRegistrationForm = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Helper to render CAPTCHA (UPDATED JSX)
+  const renderCaptcha = () => {
+    return (
+      <div className="captcha-section">
+        <div className="captcha-placeholder">
+          <div className="captcha-box">
+            <p>Enter the code below:</p>
+            {/* Display dynamic CAPTCHA code */}
+            <div className="captcha-code">{captcha.code || "Loading..."}</div>
+
+            <input
+              type="text"
+              placeholder="Enter CAPTCHA code"
+              value={captcha.input}
+              onChange={handleCaptchaChange}
+              className={captchaError ? "error" : ""}
+              // Required for client-side validation check
+              required
+            />
+            {/* Refresh button */}
+            <button
+              type="button"
+              onClick={fetchCaptcha}
+              disabled={isSubmitting}
+              className="captcha-refresh-btn"
+            >
+              <i className="fas fa-redo-alt"></i> Refresh
+            </button>
+          </div>
+        </div>
+        {captchaError && <span className="field-error">{captchaError}</span>}
+        {errors.captcha && (
+          <span className="field-error">{errors.captcha}</span>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -413,6 +492,8 @@ const VenueRegistrationForm = () => {
                 </div>
 
                 <div className="form-section">
+                  {/* CAPTCHA - RENDERED HERE */}
+                  {renderCaptcha()}
                   <div className="terms-section">
                     <label className="checkbox-label">
                       <input
