@@ -2,7 +2,7 @@ import React, { useState ,useEffect } from "react";
 import "./Forms.css";
 import Navbar from "../components/Navbar";
 import axios  from 'axios';
-const API_BASE_URL = "http://localhost:5000/api/contact";
+const API_BASE_URL = "http://localhost:5000/api/djPartysubmission";
 const DJPartyForm = () => {
   const [form, setForm] = useState({
     djName: "",
@@ -34,6 +34,14 @@ const DJPartyForm = () => {
     });
     const [captchaError, setCaptchaError] = useState('');
   
+    // New state for OTP flow
+      const [otp, setOtp] = useState('');
+      const [isEmailVerified, setIsEmailVerified] = useState(false);
+      const [isOtpSent, setIsOtpSent] = useState(false);
+      const [otpError, setOtpError] = useState('');
+
+
+
     const fetchCaptcha = async () => {
     try {
       // Endpoint to fetch the dynamic CAPTCHA code and ID
@@ -61,6 +69,12 @@ const DJPartyForm = () => {
   const handleCaptchaChange = (e) => {
     setCaptcha({ ...captcha, input: e.target.value });
     if (captchaError) setCaptchaError('');
+  };
+
+    // Handler for OTP input
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
+    if (otpError) setOtpError('');
   };
   
    // Helper to render CAPTCHA (UPDATED JSX)
@@ -114,6 +128,63 @@ const DJPartyForm = () => {
     }
   };
 
+
+  const handleSendOtp = async () => {
+      // Quick validation for required fields
+      const emailOnlyErrors = {};
+      if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) emailOnlyErrors.email = "Email must be valid to send OTP";
+      if (Object.keys(emailOnlyErrors).length > 0) {
+          setErrors(prev => ({...prev, ...emailOnlyErrors}));
+          return;
+      }
+
+      setIsSubmitting(true);
+      setOtpError('');
+      try {
+          const response = await axios.post(`${API_BASE_URL}/send-otp`, { email: form.email });
+          if (response.data.success) {
+              setIsOtpSent(true);
+              alert('OTP sent to your email. Please check your inbox.');
+          } else {
+              setOtpError(response.data.message || 'Failed to send OTP.');
+          }
+      } catch (error) {
+          console.error('Error sending OTP:', error);
+          setOtpError('A network error occurred while sending OTP. Try again.');
+      } finally {
+          setIsSubmitting(false);
+      }
+  };
+
+  const handleVerifyOtp = async () => {
+      if (!otp) {
+          setOtpError('Please enter the OTP.');
+          return;
+      }
+
+      setIsSubmitting(true);
+      setOtpError('');
+      try {
+          const response = await axios.post(`${API_BASE_URL}/verify-otp`, { 
+              email: form.email, 
+              otp: otp 
+          });
+          
+          if (response.data.success) {
+              setIsEmailVerified(true);
+              setOtpError('');
+              alert('Email verified successfully!');
+          } else {
+              setOtpError(response.data.message || 'Invalid or expired OTP.');
+          }
+      } catch (error) {
+          console.error('Error verifying OTP:', error);
+          setOtpError('Verification failed. Check the OTP or try resending.');
+      } finally {
+          setIsSubmitting(false);
+      }
+  };
+
   const validateForm = () => {
     const newErrors = {};
     if (!form.djName.trim()) newErrors.djName = "DJ name is required";
@@ -132,7 +203,16 @@ const DJPartyForm = () => {
     if (!validateForm()) return;
     
     setIsSubmitting(true);
-    try {
+    const submissionData = {
+        ...form,
+        userCaptchaAnswer: captcha.input, // User's CAPTCHA input
+        captchaId: captcha.id, // The unique ID for backend verification
+    };
+
+     try {
+        const response = await axios.post(`${API_BASE_URL}/submit`, submissionData);
+      
+      if (response.data.success) {
       console.log('DJ Form submitted:', form);
       alert("DJ application submitted successfully! We'll review your profile.");
       setForm({
@@ -141,13 +221,72 @@ const DJPartyForm = () => {
         experience: "", equipment: "", pastEvents: "", availability: "",
         feeExpectation: "", message: "", agreeToTerms: false
       });
+      setOtp('');
+      setIsEmailVerified(false);
+          setIsOtpSent(false);
+          setErrors({});
+          setOtpError('');
+          fetchCaptcha(); 
+    }
     } catch (error) {
-      alert("Error submitting form. Please try again.");
-      console.log(error);
+      const errorMessage = error.response?.data?.message || "A network error occurred. Failed to submit the form.";
+      
+      // Handle backend CAPTCHA validation error explicitly
+      if (errorMessage.includes("CAPTCHA") || errorMessage.includes("Invalid")) {
+          setCaptchaError(errorMessage);
+          fetchCaptcha(); // Load a new CAPTCHA on validation failure
+      }
+      
+      alert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+
+      // Helper to render the OTP/Email verification section (Unchanged)
+  const renderEmailVerification = () => {
+    if (isEmailVerified) {
+      return <p className="success-message">✅ Email Verified. You can now submit the form.</p>;
+    }
+    
+    if (!isOtpSent) {
+      return (
+        <div className="otp-action">
+          <button type="button" onClick={handleSendOtp} disabled={isSubmitting || errors.email || !form.email}>
+            {isSubmitting ? 'Sending...' : 'Send Verification OTP'}
+          </button>
+          {errors.email && <span className="field-error">{errors.email}</span>}
+        </div>
+      );
+    }
+    
+    return (
+      <div className="otp-verification-group">
+        <div className="form-group">
+          <label>
+            Enter OTP
+            <input
+              type="text"
+              name="otp"
+              value={otp}
+              onChange={handleOtpChange}
+              placeholder="6-digit code"
+              maxLength="6"
+            />
+            {otpError && <span className="field-error">{otpError}</span>}
+          </label>
+        </div>
+        <button type="button" onClick={handleVerifyOtp} disabled={isSubmitting || !otp}>
+          {isSubmitting ? 'Verifying...' : 'Verify OTP'}
+        </button>
+        <button type="button" onClick={handleSendOtp} disabled={isSubmitting} className="resend-btn">
+          Resend OTP
+        </button>
+      </div>
+    );
+  };
+
 
   return (
     <div className="App">
@@ -199,6 +338,7 @@ const DJPartyForm = () => {
                       className={errors.phone ? 'error' : ''} />
                     {errors.phone && <span className="field-error">{errors.phone}</span>}
                   </label>
+                  {renderEmailVerification()}
                 </div>
               </div>
             </div>

@@ -7,6 +7,7 @@ import userRouter from "./routes/user.routes.js"; // ✅ ESM import
 import contactRoutes from "./routes/contactRoutes.js";
 import submitPromoterForm  from "./routes/fromRouters.js";
 import submitBookingForm  from "./routes/bookingRoutes.js";
+import submitDjApplication  from "./routes/djpartySubmissionRoutes.js";
 dotenv.config();
 
 const prisma = new PrismaClient();
@@ -33,6 +34,7 @@ app.use("/api", userRouter);
 app.use("/api/contact", contactRoutes);
 app.use('/api/promoterFrom',submitPromoterForm);
 app.use('/api/bookingForm',submitBookingForm);
+app.use('/api/djPartysubmission',submitDjApplication);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

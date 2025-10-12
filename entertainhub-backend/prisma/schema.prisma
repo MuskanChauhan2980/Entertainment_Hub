@@ -93,3 +93,34 @@ model BookingRequest {
 
   @@map("booking_requests")
 }
+
+
+// ADD THIS NEW MODEL to your existing schema.prisma file
+
+model DJApplication {
+  id              Int     @id @default(autoincrement())
+  djName          String
+  realName        String?
+  email           String  @unique // Email must be unique for profile management
+  phone           String
+  whatsapp        String?
+  instagram       String?
+  soundcloud      String? @db.Text
+  mixcloud        String? @db.Text
+  youtube         String? @db.Text
+  genre           String
+  experience      String
+  equipment       String?
+  pastEvents      String? @db.Text
+  availability    String? @db.Text
+  feeExpectation  String?
+  message         String? @db.Text
+
+  // Verification fields (email is already verified via OTP)
+  status          String  @default("PENDING") // PENDING, REVIEWING, ACCEPTED, REJECTED
+  createdAt       DateTime @default(now())
+
+  @@map("dj_applications")
+}
+
+ 
