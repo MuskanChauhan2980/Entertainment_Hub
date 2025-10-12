@@ -41,3 +41,31 @@ model ContactRequest {
   createdAt        DateTime @default(now())
 }
 
+
+
+// ADD THIS NEW MODEL to your existing schema.prisma file
+
+model PromoterApplication {
+  id                    Int       @id @default(autoincrement())
+  fullName              String
+  email                 String    @unique // Unique email for applications
+  phone                 String
+  whatsapp              String?
+  instagram             String?
+  experience            String
+  networkSize           String?
+  preferredVenues       String?   @db.Text
+  marketingSkills       String?   @db.Text // Store as comma-separated string
+  availability          String?   @db.Text
+  commissionExpectation String?
+  references            String?   @db.Text
+  
+  // Security/Verification fields
+  // NOTE: You don't need the captcha fields here, as they are for immediate server-side validation.
+  
+  status                String    @default("PENDING") // PENDING, REVIEWING, APPROVED, REJECTED
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  
+  @@map("promoter_applications")
+}

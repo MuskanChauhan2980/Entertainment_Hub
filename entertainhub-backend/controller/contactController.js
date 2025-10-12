@@ -130,7 +130,7 @@ export const submitContactForm = async (req, res) => {
       message,
     } = req.body;
 
-    const prisma = new PrismaClient();
+     
     await prisma.contactRequest.create({
       data: {
         fullName,
@@ -155,7 +155,5 @@ export const submitContactForm = async (req, res) => {
       .status(500)
       .json({ success: false, message: "Failed to save contact form." });
   }
-   finally {
-      await prisma.$disconnect();  
-  }
+    
 };

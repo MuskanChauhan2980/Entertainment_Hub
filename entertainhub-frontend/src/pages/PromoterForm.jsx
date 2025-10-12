@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 
 import axios from 'axios'; // Import axios for API calls
 
-const API_BASE_URL = "http://localhost:5000/api/contact";
+const API_BASE_URL = "http://localhost:5000/api/promoterFrom";
 
 const PromoterForm = () => {
   const [form, setForm] = useState({
@@ -31,6 +31,12 @@ const PromoterForm = () => {
       input: '', // The user's typed answer
     });
     const [captchaError, setCaptchaError] = useState('');
+
+      // New state for OTP flow
+      const [otp, setOtp] = useState('');
+      const [isEmailVerified, setIsEmailVerified] = useState(false);
+      const [isOtpSent, setIsOtpSent] = useState(false);
+      const [otpError, setOtpError] = useState('');
 
     const fetchCaptcha = async () => {
     try {
@@ -62,6 +68,13 @@ const PromoterForm = () => {
     if (captchaError) setCaptchaError('');
   };
 
+    
+  // Handler for OTP input
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
+    if (otpError) setOtpError('');
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     
@@ -83,6 +96,63 @@ const PromoterForm = () => {
     }
   };
 
+    // --- OTP Logic (Unchanged) ---
+  const handleSendOtp = async () => {
+      // Quick validation for required fields
+      const emailOnlyErrors = {};
+      if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) emailOnlyErrors.email = "Email must be valid to send OTP";
+      if (Object.keys(emailOnlyErrors).length > 0) {
+          setErrors(prev => ({...prev, ...emailOnlyErrors}));
+          return;
+      }
+
+      setIsSubmitting(true);
+      setOtpError('');
+      try {
+          const response = await axios.post(`${API_BASE_URL}/send-otp`, { email: form.email });
+          if (response.data.success) {
+              setIsOtpSent(true);
+              alert('OTP sent to your email. Please check your inbox.');
+          } else {
+              setOtpError(response.data.message || 'Failed to send OTP.');
+          }
+      } catch (error) {
+          console.error('Error sending OTP:', error);
+          setOtpError('A network error occurred while sending OTP. Try again.');
+      } finally {
+          setIsSubmitting(false);
+      }
+  };
+
+  const handleVerifyOtp = async () => {
+      if (!otp) {
+          setOtpError('Please enter the OTP.');
+          return;
+      }
+
+      setIsSubmitting(true);
+      setOtpError('');
+      try {
+          const response = await axios.post(`${API_BASE_URL}/verify-otp`, { 
+              email: form.email, 
+              otp: otp 
+          });
+          
+          if (response.data.success) {
+              setIsEmailVerified(true);
+              setOtpError('');
+              alert('Email verified successfully!');
+          } else {
+              setOtpError(response.data.message || 'Invalid or expired OTP.');
+          }
+      } catch (error) {
+          console.error('Error verifying OTP:', error);
+          setOtpError('Verification failed. Check the OTP or try resending.');
+      } finally {
+          setIsSubmitting(false);
+      }
+  };
+
   const validateForm = () => {
     const newErrors = {};
     if (!form.fullName.trim()) newErrors.fullName = "Full name is required";
@@ -100,23 +170,91 @@ const PromoterForm = () => {
     if (!validateForm()) return;
     
     setIsSubmitting(true);
+       // 3. Prepare Submission Data (UPDATED to include CAPTCHA details)
+    const submissionData = {
+        ...form,
+        purpose: form.purposeOfContact, // Backend expects 'purpose'
+        userCaptchaAnswer: captcha.input, // User's CAPTCHA input
+        captchaId: captcha.id, // The unique ID for backend verification
+    };
     try {
-      console.log('Promoter Form submitted:', form);
+      const response = await axios.post(`${API_BASE_URL}/submit`, submissionData);
+      
+      if (response.data.success) {
+          console.log('Promoter Form submitted:', form);
       alert("Promoter application submitted! We'll review your profile.");
       setForm({
         fullName: "", email: "", phone: "", whatsapp: "", instagram: "",
         experience: "", networkSize: "", preferredVenues: "", marketingSkills: [],
         availability: "", commissionExpectation: "", references: "", agreeToTerms: false
       });
-    } catch (error) {
-      alert("Error submitting form. Please try again.");
-      console.llog(error);
+      setOtp('');
+      setIsEmailVerified(false);
+          setIsOtpSent(false);
+          setErrors({});
+          setOtpError('');
+          fetchCaptcha(); 
+      }
+    }catch (error) {
+      const errorMessage = error.response?.data?.message || "A network error occurred. Failed to submit the form.";
+      
+      // Handle backend CAPTCHA validation error explicitly
+      if (errorMessage.includes("CAPTCHA") || errorMessage.includes("Invalid")) {
+          setCaptchaError(errorMessage);
+          fetchCaptcha(); // Load a new CAPTCHA on validation failure
+      }
+      
+      alert(errorMessage);
+      console.log(error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
 
+    // Helper to render the OTP/Email verification section (Unchanged)
+  const renderEmailVerification = () => {
+    if (isEmailVerified) {
+      return <p className="success-message">✅ Email Verified. You can now submit the form.</p>;
+    }
+    
+    if (!isOtpSent) {
+      return (
+        <div className="otp-action">
+          <button type="button" onClick={handleSendOtp} disabled={isSubmitting || errors.email || !form.email}>
+            {isSubmitting ? 'Sending...' : 'Send Verification OTP'}
+          </button>
+          {errors.email && <span className="field-error">{errors.email}</span>}
+        </div>
+      );
+    }
+    
+    return (
+      <div className="otp-verification-group">
+        <div className="form-group">
+          <label>
+            Enter OTP
+            <input
+              type="text"
+              name="otp"
+              value={otp}
+              onChange={handleOtpChange}
+              placeholder="6-digit code"
+              maxLength="6"
+            />
+            {otpError && <span className="field-error">{otpError}</span>}
+          </label>
+        </div>
+        <button type="button" onClick={handleVerifyOtp} disabled={isSubmitting || !otp}>
+          {isSubmitting ? 'Verifying...' : 'Verify OTP'}
+        </button>
+        <button type="button" onClick={handleSendOtp} disabled={isSubmitting} className="resend-btn">
+          Resend OTP
+        </button>
+      </div>
+    );
+  };
+  
   // Helper to render CAPTCHA (UPDATED JSX)
   const renderCaptcha = () => {
     return (
@@ -187,6 +325,7 @@ const PromoterForm = () => {
                       className={errors.email ? 'error' : ''} />
                     {errors.email && <span className="field-error">{errors.email}</span>}
                   </label>
+                  {renderEmailVerification()}
                 </div>
                 <div className="form-group">
                   <label>
