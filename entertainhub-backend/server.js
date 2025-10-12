@@ -9,7 +9,9 @@ import submitPromoterForm  from "./routes/fromRouters.js";
 import submitBookingForm  from "./routes/bookingRoutes.js";
 import submitDjApplication  from "./routes/djpartySubmissionRoutes.js";
 import venueRegistrationForm from "./routes/VenuesController.js";
-import submitInfluencerApplication   from "./routes/InfluencerRegistrationRoutes.js"
+import submitInfluencerApplication   from "./routes/InfluencerRegistrationRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+ 
 dotenv.config();
 
 const prisma = new PrismaClient();
@@ -38,7 +40,8 @@ app.use('/api/promoterFrom',submitPromoterForm);
 app.use('/api/bookingForm',submitBookingForm);
 app.use('/api/djPartysubmission',submitDjApplication);
 app.use('/api/venueRegistrationForm' ,venueRegistrationForm);
-app.use('/api/influencerRegistrationForm',submitInfluencerApplication )
+app.use('/api/influencerRegistrationForm',submitInfluencerApplication );
+app.use("/api/admin", adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

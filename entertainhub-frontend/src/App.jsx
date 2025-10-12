@@ -23,6 +23,7 @@ import VenueRegistrationForm from "./pages/VenueRegistrationForm";
 import GuestlistTableBookingForm from "./pages/GuestlistTableBookingForm";
 import PromoterForm from "./pages/PromoterForm";
 import InfluencerRegistrationForm from "./pages/InfluencerRegistrationForm";
+import AdminDashboard  from "./pages/AdminDashboard"
 import "./App.css";
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
           element={<VenueRegistrationForm />}
         />
         <Route path="/PromoterForm" element={<PromoterForm />} />
+         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </Router>
   );
