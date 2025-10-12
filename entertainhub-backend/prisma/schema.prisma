@@ -101,7 +101,7 @@ model DJApplication {
   id              Int     @id @default(autoincrement())
   djName          String
   realName        String?
-  email           String  @unique // Email must be unique for profile management
+  email           String   
   phone           String
   whatsapp        String?
   instagram       String?
@@ -131,7 +131,7 @@ model VenueRegistration {
   venueName             String
   venueType             String
   contactPerson         String
-  email                 String    @unique
+  email                 String     
   phone                 String
   whatsapp              String?
   address               String    @db.Text
@@ -158,7 +158,7 @@ model VenueRegistration {
 model InfluencerApplication {
   id                      Int       @id @default(autoincrement())
   fullName                String
-  email                   String    @unique 
+  email                   String      
   phone                   String
   instagram               String
   followers               String
